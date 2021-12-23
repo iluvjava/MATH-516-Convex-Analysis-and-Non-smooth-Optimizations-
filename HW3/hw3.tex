@@ -1,0 +1,673 @@
+\documentclass[]{article}
+\usepackage{amsmath}\usepackage{amsfonts}
+\usepackage[margin=1in,footskip=0.25in]{geometry}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\usepackage[final]{graphicx}
+\usepackage{listings}
+\usepackage{courier}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\newcommand{\indep}{\perp \!\!\! \perp}
+% \usepackage{wrapfig}
+\graphicspath{{.}}
+
+\begin{document}
+\begin{center}
+    Name: Hongda Li
+    \\
+    AMATH 516 FALL 2021 HW3
+\end{center}
+\section*{3.2}
+    For any convex function that has a finite value the relative interior of its domain, the function is proper. 
+    \\[1.1em]
+    For contradiction, let $\bar{x} \in \text{dom}(f)$, $f(\bar{x}) = -\infty$ so the function is improper, then consider any $x\in \text{ri}(\text{dom})(f)$: 
+    \begin{align*}\tag{3.2.1}\label{eqn:3.2.1}
+        \exists \delta > 0 \; \forall \lambda \in (-\delta, 1): (1 - \lambda)x + \lambda \bar{x} \in \text{dom}(f)
+    \end{align*}
+    This is possible because $x\in \text{ri}\text{dom}(f)$. Now consider: 
+    \begin{align*}\tag{3.2.2}\label{eqn:3.2.2}
+        y &= (1 + \delta)x - \delta \bar{x}
+        \\
+        \frac{1}{1 + \delta} y &= x - \frac{\delta}{1 + \delta }\bar{x}
+        \\
+        x &= \frac{1}{1 + \delta} y + \left(1 - 
+            \frac{1}{1 + \delta}
+        \right)\bar{x}
+    \end{align*}
+    Oberve that $0<1/ (1 + \delta) < 1$. Invoke the convexity of the function we have: 
+
+    \begin{align*}\tag{3.2.3}\label{eqn:3.2.3}
+        f\left(
+            \frac{y}{1 + \delta} + \left(
+                1 - \frac{1}{1 + \delta}
+            \right)\bar{x}
+        \right) &\le \frac{1}{1 + \delta}f(y) + \left(
+            1 + \frac{1}{1 + \delta}
+        \right)f(\bar{x})
+        \\
+        f(x) &\le - \infty
+    \end{align*}
+    f is now improper at all points in $\text{ri}\text{dom}(f)$, which is a contradiction that, the function has a finite value in its relative domain. 
+
+\section*{3.5}
+    \subsection*{(1)}
+        Show the the support function $\delta^\star_Q$ is convex. 
+        \\[1.1em]
+        The case when $Q = \emptyset$ or $Q = \mathbf{E}$ is trivially true. 
+        Recall the theorem: 
+        $$
+            \text{epi}\left(
+                \sup_{i \in I}
+                    f_i(x)
+            \right) = 
+            \bigcup_{i \in I} \text{epi}(f_i)
+        $$
+        From the definition of the support function we have: 
+        \begin{align*}\tag{3.5.1}\label{eqn:3.5.1}
+            \delta^\star_Q(x) &= \sup_{y \in Q}\left\langle y, x \right\rangle
+            \\
+            \text{epi}(\delta^\star_Q) &= \bigcap_{y\in Q} \text{epi}\left\langle y, \cdot \right\rangle
+        \end{align*} 
+        The function is convex because the half spaces are convex and it's epigraph are the intersections of half-spaces. The function is closed because it's taking the supremum on all the halfspaces. 
+    \subsection*{(2)}
+        If $Q$ is convex, then $\delta_Q$, $\text{dist}_Q$ are convex function. 
+        \\[1.1em]
+        The indicator function is convex because: 
+        \begin{align*}\tag{3.5.2.1}\label{eqn:3.5.2.1}
+            (x, \delta_Q(x))&\in \text{epi}(\delta_Q) 
+            \\
+            (y, \delta_Q(y)) & \in \text{epi}(\delta_Q)
+            \\ \underset{[3.5.2.1.1]}{\implies}
+            \lambda \begin{bmatrix}
+                x \\ \delta_Q(x) 
+            \end{bmatrix} + 
+            (1 - \lambda) \begin{bmatrix}
+                \delta_Q(x)  \\ \delta_Q(y)
+            \end{bmatrix} & 
+            = \begin{bmatrix}
+                \lambda x + (1 - \lambda) y
+                \\
+                0
+            \end{bmatrix} \in \text{epi}(\delta_Q)
+            \quad \forall \lambda \in (0, 1)
+        \end{align*}
+        [3.5.2.1.1] holds true because $Q$ is a convex set.
+        \\
+        Next we wish to prove that $\text{dist}_Q$ is convex for any convex set $Q$. Let $\bar{Q} = \text{cl}(Q)$ denotes the closure of $Q$ then the following statements are true: 
+        \begin{align*}\tag{3.5.2.2}\label{eqn:3.5.2.2}
+            \text{dist}_{\bar{Q}}(x) &= \text{dist}_Q(x) \quad \forall x \in \mathbf{E}
+        \end{align*}
+        The distance functin applied on the set and the closure of the set is the same. 
+        \begin{align*}\tag{3.5.2.3}\label{eqn:3.5.2.3}
+            \{x^+\} &= \arg\min_{y \in \bar{Q}} \Vert y - x\Vert = \underset{\bar{Q}}{\text{proj}}(y)
+        \end{align*}
+        The projection of the point $y$ onto the set $Q$ is unique and it's in $\bar{Q}$. Take these facts for granted for now the proofs are in the appendix. \hyperref[sec:A.1]{A.1} proves that the distance function on the set and the close of the set is the equivalent. \hyperref[sec:A.2]{A.2} proves that the projectio onto the set $\text{cl}(Q)$ is unieque when the set is convex.
+        \\
+        Consider: 
+        \begin{align*}\tag{3.5.2.4}\label{eqn:3.5.2.4}
+            \forall \lambda &\in (0, 1)
+            \\
+            P_1 &= \underset{\bar{Q}}{\text{proj}}(\lambda y_1)
+            \\
+            P_2 &= \underset{\bar{Q}}{\text{proj}}((1 - \lambda) y_2) 
+            \\
+            \underset{[3.5.2.4.1]}{\implies}
+            \lambda y_1 + (1 - \lambda)y_2 & \in \bar{Q}
+            \\
+            P &= \underset{\bar{Q}}{\text{proj}}(\lambda y_1 + (1 - \lambda) y_2)
+        \end{align*}
+        [3.5.2.4.1] by the convexity of the set $Q$. Then we can consider the secant line inequality: 
+        \begin{align*}\tag{3.5.2.5}\label{eqn:3.5.2.5}
+            \underset{[3.5.2.5.1]}{\implies}
+            \Vert \lambda y_1 + (1 - \lambda)y_2 - P\Vert & \le 
+            \Vert \lambda y_1 + (1 - \lambda)y_2 - (P_1 + P_2)\Vert
+            \\
+            & \le \Vert \lambda y_1 - P_1\Vert + \Vert \lambda (1 - \lambda)y_2 - P_2\Vert
+            \\
+            &=\text{dist}_{\bar{Q}} (\lambda y_1) + \text{dist}_{\bar{Q}}((1 - \lambda)y_2)
+        \end{align*}
+        [3.5.2.5.1] is true by the definition of projection where $P$ is always closest to the point $\lambda y_1 + (1 - \lambda)y_2$ in the set $\bar{Q}$. 
+        The end of \hyperref[eqn:3.5.2.5]{(3.5.2.5)} is the secant line inquality, which implies that the function is convex. 
+    \subsection*{(3)}
+        The gauge function is convex when the set $Q$ is convex. The Gauge function is defined as: 
+        $$
+            \gamma_Q(x) = \inf \{\lambda \ge 0 : x \in \lambda Q\}
+        $$
+        \begin{align*}\tag{3.5.3.1}\label{eqn:3.5.3.1}
+            x_1 \in \gamma_Q(x_1)Q
+            \\
+            x_2 \in \gamma_Q(x_2)Q
+        \end{align*}
+        From Lemma 2.4 in the textbook if $A, B$ are convex set and $x \in A, y \in B$, then $x + y \in A+ B$, where set addition should be interpreted as convolutions. Then we can say that: 
+        \begin{align*}\tag{3.5.3.2}\label{eqn:3.5.3.2}
+            \forall \alpha \in (0, 1): 
+            \alpha x_1 + (1 - \alpha) x_2 &\in \alpha \gamma_Q(x_1)Q + (1 - \lambda)\gamma_Q(x_2)Q
+            \\
+            & \in (\alpha \gamma_Q(x_1) + (1 - \alpha)\gamma_Q(x_2))Q
+        \end{align*}
+        From the definition of gague function, it's minimizing the multiplier on $Q$, therefore, using the definiton and the statement above we obtained the secant line inequality: 
+        \begin{align*}\tag{3.5.3.3}\label{eqn:3.5.3.3}
+            \gamma_Q(\lambda x_1 + (1 - \lambda)x_2) &\le \alpha \gamma_Q(x_1) + (1 - \alpha) \gamma_Q(x_2)
+        \end{align*}
+        Because secant line inequality is true, the gague function is convex. 
+
+
+
+
+\section*{3.9}
+    Let $F(S): \mathbf{S}_{++} \mapsto \mathbb{R}:= -\log(|X|)$
+    From Exercise 1.12.3, we have: 
+    $$
+        \forall X \in \text{dom}(F) : \left\langle \nabla^2F(X)(V), V \right\rangle = \Vert X^{1/2}VX^{1/2}\Vert_F^2 \ge 0 
+    $$
+    Recall from the Textbook theorem 3.8.(d), that if a function has a Positive Definite Hessian, the function would be a convex function. In this case from the results of exercise 1.12.3, the operator $\nabla^2F(X)$ is a positive definite operator, hence, the function is convex. 
+    
+\section*{3.24}
+    We wish to look for the Fenchel Conjugate and Fenchel Bi-Conjugate of the affine functions, which is: 
+    \begin{align*}\tag{3.24.1}\label{eqn:3.24.1}
+        f(x) &:= \left\langle a, x \right\rangle + b
+        \\
+        f^\star(x) &= \sup_y \{\left\langle x, y \right\rangle - f(y)\}
+        \\
+        &= \sup_y \{
+            \left\langle x, y \right\rangle   - \left\langle a, y \right\rangle - b
+        \}
+        \\
+        &= 
+        \sup_y \left\lbrace
+            \left\langle y, x - a \right\rangle - b
+        \right\rbrace
+        \\
+        &= \begin{cases}
+            0 & x = a 
+            \\
+            \infty& x \neq a 
+        \end{cases}
+        \\
+        &= \delta_{=a}(x)
+    \end{align*}
+    Now we may consider the bi-conjugation of the function: 
+    \begin{align*}\tag{3.24.2}\label{eqn:3.24.2}
+        (\delta_{=a})^\star(x) &= \sup_y \{
+            \left\langle x, y \right\rangle - \delta_{=a}(y)
+        \}
+        \\
+        &= \left\langle x, y \right\rangle
+    \end{align*}
+    This is true because any other value of $y\neq a$, the expression inside $\sup$ will $-\infty$. The Bi-conjugate of the affine function is the function itself. 
+\section*{3.25}
+    We wish to prove the Minmax lemma: 
+    $$
+        \sup_y\inf_x g(x, y) \le \inf_x\sup_y g(x,y)
+    $$
+    This is true because: 
+    \begin{align*}\tag{3.25.1}\label{eqn:3.25.1}
+        \inf_z g(z, y) &\le g(x, y) \quad \forall y, x
+        \\
+        g(x, y) &\le \sup_w g(x, y) \quad \forall x, y
+        \\
+        \inf_z g(z, y) &\le \sup_w g(x, w) \quad \forall x, y
+        \\
+        \implies
+        \sup_w\inf_z g(z, w) &\le \inf_z \sup_w g(z, w)
+    \end{align*}
+
+\section*{3.31}
+    Let $f: \mathbf{E} \mapsto \bar{\mathbb{R}}$ be differentiable at $x$, then: 
+    $$
+        \partial f = \{\nabla f(x)\} 
+    $$
+    The sub gradient is singleton and it's the gradient of the differentiable function. 
+    \\[1.1em]
+    We wish to prove that $\forall v \in \partial f(x): v = \nabla f (x)$. 
+    \\
+    Consider the defintion of the gradient and the definition of the subgradient: 
+    \begin{align*}\tag{3.31.1}\label{eqn:3.31.1}
+        f(x + th) &= f(x) + t \left\langle \nabla f(x), h \right\rangle + o_1(t)
+        \\
+        \forall v \in \partial f(x): \quad 
+        f(x + th) &= f(x) + t \left\langle v, h \right\rangle + o_2(t)
+        \\
+        \implies
+        f(x) + t \left\langle \nabla f(x), h \right\rangle + o_1(t) &= 
+        f(x) + t \left\langle v, h \right\rangle + o_2(t)
+        \\
+        \frac{t \left\langle \nabla f(x), h \right\rangle}{t} + o_1(t)
+        &= 
+        \frac{t \left\langle v, h \right\rangle}{t} + o_2(t) \quad \forall h
+        \\
+        \left\langle \nabla f(x), h \right\rangle + \frac{o_1(t)}{t} &= \left\langle v, h \right\rangle + 
+        \frac{o_2(t)}{t}\quad \forall h 
+        \\
+        \left\langle \nabla f(x), h \right\rangle &= \left\langle v, h \right\rangle \quad \forall v
+        \\
+        \implies \nabla f(x) &= v 
+    \end{align*}
+    It's also ok to just set $h = e_i$, the cannonical basis vector to show the equality at the end. 
+    Next, it't not hard to see that $\nabla f(x) \subseteq \partial f(x)$ because 
+    \begin{align*}\tag{3.31.2}\label{eqn:3.31.2}
+        f(x + th) = f(x) + t \left\langle \nabla f(x), h \right\rangle + o_1(t) 
+        \\
+        \implies f(x + th) \ge f(x) + t \left\langle \nabla f(x), h \right\rangle + o_1(t) 
+    \end{align*}
+    The equality is a stricter condition than the inequality and I can just swap it to an inequality then we hace the definition of the sub gradient. Therefore $\nabla f(x) \subseteq \partial f(x)$. 
+    \\
+    Combining results from \hyperref[eqn:3.31.1]{(3.31.1)} and \hyperref[eqn:3.31.2]{(3.31.2)}, we have the equality between $\partial f(x)$ and $\nabla f(x)$. 
+\section*{3.36}
+    Let $f: \mathbf{E}\mapsto \bar{\mathbb{R}}$ be convex and $f(x)$ finite, for $x \in \mathbf{E}$ then we wish to prove that: 
+    $$
+        v \in \partial f(x) \iff f(y) \ge f(x) + \left\langle v, y - x \right\rangle
+    $$
+    First we wish to prove the direction $\implies$.
+    \\
+    From Exercise 3.35: $v\in \partial f(x) \iff (v, -1) \in N_{\text{epi}(f)}(x, f(x))$. And by the convexity of the function, $\text{epi}(f)$ is a convex set, then we invoke the results from Exercise 2.36 fom the previous homework and we have: 
+    \begin{align*}\tag{3.36.1}\label{eqn:3.36.1}
+        0 &\ge \left\langle (v, -1), (y - x, r_y - f(x)) \right\rangle 
+        \quad
+        \forall r_y \ge f(y) \iff \forall  (y, r_y)\in \text{epi}(f)
+        \\
+        \text{set: }r_y &= f(y)
+        \\
+        \implies 0 &\ge \left\langle 
+            \begin{bmatrix}
+                v\\ -1
+            \end{bmatrix}, 
+            \begin{bmatrix}
+                y - x
+                \\
+                f(y) - f(x)
+            \end{bmatrix}
+        \right\rangle\quad \forall y
+        \\
+        & \ge 
+        \left\langle v, y - x \right\rangle - f(y) + f(x)
+        \\
+        f(y) &\ge \left\langle v, y - x \right\rangle + f(x) \forall y
+    \end{align*}
+    We arrived at the gradient inequality. Next we wish to prove that $\impliedby$ direction: 
+    \begin{align*}\tag{3.36.2}\label{eqn:3.36.2}
+        f(y) & \ge f(x) + \left\langle v, y - x \right\rangle \quad \forall y
+        \\
+        0 &\ge f(x) - f(y) + \langle v, y - x\rangle
+        \\
+        0 &\ge \left\langle 
+            \begin{bmatrix}
+                v \\ -1
+            \end{bmatrix}, 
+            \begin{bmatrix}
+                y -x \\
+                f(y) - f(x)
+            \end{bmatrix}
+        \right\rangle
+        \\
+        \text{Let: } r_y &\ge f(y), \text{ so that } (y, r_y) \in \text{epi}(f) 
+        \\
+        \implies 
+        0 &\ge 
+        \left\langle 
+            \begin{bmatrix}
+                v \\ -1
+            \end{bmatrix}, 
+            \begin{bmatrix}
+                y -x \\
+                f_y - f(x)
+            \end{bmatrix}
+        \right\rangle\quad \forall (y, r_y) \in \text{epi}(f)
+    \end{align*}
+    Take notice that this is just the definition of the Tangent cone for the convex set $\text{epi}(f)$, therefore we have: 
+    \begin{align*}\tag{3.36.3}\label{eqn:3.36.3}
+        (v, -1) &\in N_{\text{epi}(f)}(x, f(x)) 
+        \\
+        \implies
+        v &\in \partial f(x) \quad \text{By Exericise 3.35}
+    \end{align*}
+    
+\section*{3.45} 
+    For any function, $f: \mathbf{E}\mapsto \bar{\mathbb{R}}$ and a point $x$, with $f(x)$ finite, equality holds: 
+    $$
+        \text{epi}(df(x)) = T_{\text{epi}(f)}(x, f(x))
+    $$
+    Firstly, we need $\subseteq$. Suppose that $(v, r) \in T_{\text{epi}(f)}(\bar{x}, f(\bar{x}))$. Using the definition of a tagent cone of a set we have: 
+    \begin{align*}\tag{3.45.1}\label{eqn:3.45.1}
+        \exists\; r_i, x_i: &
+        \\
+        (x_i, r_i) &\in \text{epi}(f) \quad \forall i \in \mathbb{N}
+        \\
+        v &= \lim_{i\rightarrow \infty} \tau_i^{-1}(x_i - \bar{x})
+        \\
+        r &= \lim_{i\rightarrow \infty} \tau_i^{-1}(r_i - f(\bar{x})) 
+        \\
+        \text{where: }& \tau_i \searrow 0
+    \end{align*}
+    Take notice that, $\tau_i \searrow$ can also be used for the defintion of the Subderivative. Consider: 
+    \begin{align*}\tag{3.45.2}\label{eqn:3.45.2}
+        \liminf_{i\rightarrow \infty, \tau_i \searrow 0 } 
+        & \frac{f(\bar{x} + \tau_i w_i) - f(\bar{x})}{ \tau_i}
+        \\
+        \text{let: } w_i &= \tau_i^{-1}(x - \bar{x}) 
+        \\
+        \underset{\hyperref[eqn:3.45.1]{(3.45.1)}}{\implies} \lim_{i\rightarrow \infty} w_i &= v 
+        \\
+        \implies
+        \liminf_{i\rightarrow \infty, \tau_i \searrow 0 } 
+        & \frac{f(\bar{x} + \tau_i w_i) - f(\bar{x})}{ \tau_i} = df(\bar{x})(v)
+    \end{align*}
+    Now Observe that if I did this we also have: 
+    \begin{align*}\tag{3.45.3}\label{eqn:3.45.3}
+        \bar{x} + \tau_iw_i &= \bar{x} + (x_i - \bar{x}) = x_i
+        \\
+        \underset{\hyperref[eqn:3.45.1]{(3.45.1)}}{\implies} r_i &\ge f(x_i)\ge f(\bar{x} + \tau_i w_i)
+        \\
+        \implies \liminf_{i\rightarrow \infty} 
+        \frac{r_i - f(\bar{x})}{\tau_i} & \ge df(\bar{x})(v)
+        \\
+        r & \ge df(\bar{x})(v)
+        \\
+        \implies (v, r) & \in \text{epi}(df(\bar{x}))
+    \end{align*}
+    Now we need to prove $\supseteq$, which starts with $(v, r)\in \text{epi}(df(\bar{x}))$, and by def we know $df(\bar{x})(v) \le r$.
+    From the definition of subderivative we have: 
+    \begin{align*}\tag{3.45.4}\label{eqn:3.45.4}
+        \liminf_{i \rightarrow \infty} \frac{f(\bar{x} + \tau_i w_i) - f(\bar{x})}{\tau_i} 
+        &= 
+        df(\bar{x})(v) \le r
+        \\
+        \text{with: }\lim_{i\rightarrow } w_i &= v 
+        \\
+        \tau_i &\searrow 0
+    \end{align*}
+    Then, we can conjure up a sequence $\{x_i\}_{i\in \mathbb{N}}$ from this definition of direction derivative: 
+    \begin{align*}\tag{3.45.5}\label{eqn:3.45.5}
+        \exists \{x_i\}_{i\in \mathbb{N}} : \tau_i w_i &= x_i - \bar{x}
+        \\
+        \implies
+        w_i &= \tau_i^{-1}(x_i - \bar{x})
+        \\
+        \implies 
+        x_i &= \tau_i w_i + \bar{x}
+        \\
+        \implies f(\bar{x} - \tau_i w_i) &= f(x_i)
+    \end{align*}
+    Now we may consider the choice of $r_i$ as the following: 
+    \begin{align*}\tag{3.45.6}\label{eqn:3.45.6}
+        r_i &= \max(r\tau_i + f(\bar{x}), f(x_i))
+        \\
+        \implies (x_i, r_i) &\in \text{epi}(f) 
+        \\
+        r_i &\ge f(x_i)
+    \end{align*}
+    I made the sequence of $r_i$, so that it makes sure all $r_i \ge f(x_i)$, which implies that the points are in the interior of the domain. Now, let's consider the limot of the sequence: 
+    \begin{align*}\tag{3.45.7}\label{eqn:3.45.7}
+        r_i &= \max(r\tau_i + f(\bar{x}), f(x_i))
+        \\
+        r_i - f(\bar{x}) &= \max(r\tau_i, f(x_i) - f(\bar{x}))
+        \\
+        \tau_i^{-1}(r_i - f(\bar{x})) &= \max\left(
+            r, \frac{f(x_i) - f(\bar{x})}{\tau_i}
+        \right)
+        \\
+        \lim_{i\rightarrow \infty} \tau_i^{-1}(r_i - f(\bar{x})) &= r
+    \end{align*}
+    Consider the other limit: 
+    \begin{align*}\tag{3.45.8}\label{eqn:3.45.8}
+        \lim_{i\rightarrow \infty} \tau_i^{-1}(x_i - \bar{x}) &= \lim_{i\rightarrow \infty} w_i = v
+    \end{align*}
+    Using both limit from \hyperref[eqn:3.45.8]{(3.45.8)} and \hyperref[eqn:3.45.7]{(3.45.7)}, we can make the claim that $(v, r) \in T_{\text{epi}(f)}(\bar{x}, f(\bar{x}))$. Because all the limit points are inside of the epigraph of the function $f$, and the limit fits the definition of the tangent cone. 
+
+\section*{3.51}
+    Suppose that $f: \mathbf{E}\mapsto \bar{\mathbb{R}}$, and it's proper and convex, then suppose that $Q \subseteq \text{dom}(f)$ with $Q$ being an open subset of the domain then: 
+    $$
+        \sup_{x, y\in Q} \frac{|f(x) - f(y)|}{\Vert y - x\Vert}  = \sup_{\substack{z \in Q \\ v \in \partial f(z)}} \Vert v\Vert
+    $$
+    Firstly we need to justify $\ge$: 
+    \\
+    Fix $x\in Q$; and let $v\in \partial f(x)$ (exists because $Q \subseteq \text{dom}(f)$ and $Q$ is open.), then $\forall t \ge 0, v \in \partial f(x)$ we have: 
+    \begin{align*}\tag{3.51.1}\label{eqn:3.51.1}
+        f(x + tv) - f(x) &\ge \left\langle v, tv \right\rangle
+        \\
+        \frac{f(x + tv) - f(x)}{t \Vert v\Vert} &\ge \Vert v\Vert
+        \\
+        \sup_{v\in \partial f(x)} \frac{f(x + tv) - f(x)}{t \Vert v\Vert}
+        & \ge 
+        \sup_{v\in \partial f(x)} \Vert v\Vert 
+        \\
+        \underset{[3.51.1.2]}{\implies}
+        \sup_{y\in Q} \frac{f(y) - f(x)}{\Vert y - x\Vert} &\ge 
+        \sup_{v\in \partial f(x)} \frac{f(x + tv) - f(x)}{t \Vert v\Vert}
+        \ge
+        \sup_{v\in \partial f(x)} \Vert v\Vert \quad \forall x \in Q
+        \\
+        \underset{[3.51.1.1]}{\implies }
+        \sup_{y\in Q} \frac{|f(y) - f(x)|}{\Vert y - x\Vert} 
+        &\ge 
+        \sup_{v\in \partial f(x)} \Vert v \Vert \quad \forall x \in Q
+        \\
+        \sup_{y, x\in Q}  \frac{|f(y) - f(x)|}{\Vert y - x\Vert} 
+        & \ge \sup_{\substack{x \in Q \\ v \in \partial f(x)}} \Vert v\Vert
+    \end{align*}
+    [3.51.1.1]: The absolute value of the sup is even bigger than the sup without the absolute value. 
+    \\[0.5em]
+    [3.51.1.2]: I unfixed the value of $x$ at this point. 
+    \\[1.1em]
+    Next, we wish to prove the $\le$ inequality for the statement. Consider the Gradient Inequality for the subdifferential take at 2 points $x, y \in Q$ (We can do this and $x, y$ exists because $Q$ is an open subset of the domain): 
+    \begin{align*}\tag{3.51.2}\label{eqn:3.51.2}
+        f(y) - f(x) &\ge \left\langle v_x, y - x \right\rangle \quad v_x \in \partial f(x)
+        \\
+        f(x) - f(y) &\ge \left\langle v_y, x - y \right\rangle \quad v_y \in \partial f(y)
+        \\
+        \implies 
+        \left\langle v_y, y - x \right\rangle \ge f(y) - f(x) &\ge \left\langle v_x, y - x \right\rangle
+    \end{align*}
+    Now we introduce the Cauchy inequality and consider the divisions of the above inequality by a positive quantities $\Vert y - x \Vert$, giving us: 
+    \begin{align*}\tag{3.51.3}\label{eqn:3.51.3}
+        \Vert v_y\Vert \ge 
+        \frac{\left\langle v_y, y - x \right\rangle}{\Vert y - x\Vert}
+        & \ge
+        \frac{f(y) - f(x)}{\Vert y - x\Vert} \ge 
+        \frac{\left\langle v_x, y - x \right\rangle}{\Vert y - x\Vert} \ge 
+        - \Vert v_x\Vert
+        \\
+        \Vert v_y \Vert & \ge \frac{f(y) - f(x)}{\Vert y - x\Vert} \ge - \Vert v_x\Vert
+        \\
+        \sup_{\substack{z \in Q \\ v \in \partial f(z)}} \Vert v\Vert 
+        & \ge 
+        \frac{f(y) - f(x)}{\Vert y - x\Vert} \ge - \sup_{\substack{z \in Q \\ v \in \partial f(x)}} \Vert v\Vert
+        \\
+        \implies 
+        \sup_{x, y\in Q} \frac{|f(y) - f(x)|}{\Vert y - x\Vert}
+        &\le \sup_{\substack{z \in Q \\ v \in \partial f(z)}} \Vert v\Vert
+    \end{align*}
+    Since, both $\le$ and $\ge$ holds for quantities at the RHS and the LHS of the expression, the equality is assured. 
+
+\section*{3.54}
+    The statement we wish to prove is: 
+    $$
+        \partial f(x) = \{\nabla f(x)\} \iff f(x) \text{ is differentiable}
+    $$
+    The $\impliedby$ direction is already solve in Excercise 3.31 in this HW. We wish to prove the $\implies$ direction for this HW.
+    \\
+    To start, consider $x \in \text{dom}(f)$, and we need to verify the statement that: 
+    \begin{align*}\tag{3.54.1}\label{eqn:3.54.1}
+        N_{\text{dom}(f)}(x) + \partial f(x) \subseteq \partial f(x)
+    \end{align*}
+    Firstly, From the defintiion of the Normal Cone on the domain of the function we have: 
+    \begin{align*}\tag{3.54.2}\label{eqn:3.54.2}
+        N_{\text{dom}(f)} (x) &= \{
+            u: \left\langle y - x, u \right\rangle \le 0 \quad \forall y \in \text{dom}(f)
+        \}
+    \end{align*}
+    Invoke theorem 3.35 using the fact that the function is a proper convex function we have: 
+    \begin{align*}\tag{3.54.3}\label{eqn:3.54.3}
+        v \in \partial f(x) \iff (v, -1) &\in N_{\text{epi}(f)} (x, f(x)) 
+        \\
+        \left\langle 
+            \begin{bmatrix}
+                v \\ -1
+            \end{bmatrix}, 
+            \begin{bmatrix}
+                y - x \\ r - f(x)
+            \end{bmatrix}
+        \right\rangle 
+        &\le  0 \quad \forall (y,r) \in \text{epi}(f)
+        \\
+        \left\langle v, y - x \right\rangle + f(x) - r &\le 0
+        \\
+        \left\langle v, y - x \right\rangle + f(x) &\le r \quad \text{set: } r = f(x)
+        \\
+        \left\langle v, y - x \right\rangle + f(x) &\le f(y)
+    \end{align*}
+    Now consider $u \in N_{\text{dom}(f)}(x), v \in \partial f(x), x \in \text{dom}(f)$, using \hyperref[eqn:3.54.2]{(3.54.2)},\hyperref[eqn:3.54.3]{(3.54.3)} we have: 
+    \begin{align*}\tag{3.54.4}\label{eqn:3.54.4}
+        \left\langle y - x, y \right\rangle &\le 0 \quad \forall y \in \text{dom}(f)
+        \\
+        \left\langle v, y - x \right\rangle + f(x) & \le f(y)
+        \\
+        \left\langle y - x, v + u \right\rangle + f(x) &\le f(y)
+        \\
+        \implies (u + v) &\in \partial f(x)
+    \end{align*}
+    We had take 2 elements $u, v$ from the Normal cone and the sub-gradient set, and show that it's still in the sub gradient set. There fore statement \hyperref[eqn:3.54.1]{(3.54.1)} is proved. 
+    \\[1.1em]
+    Finally, by Exercise 3.38 and $\partial f(x)\neq \emptyset$ we know that $x\in \text{ri}(\text{dom}(f))$, however we also know that $\partial f(x)$ is a singleton, which can only implies that $T_{\text{dom}(f)}(x) = \{0\}$, and that would mean $x \in \text{int}(\text{dom}(f))$. 
+    \\[1.1em]
+    Consider sequence of $y_i \rightarrow x$, $y_i \in \text{int}(\text{dom}(f)),v_i \in \partial f(y_i)$. Using Corrollary 3.53 in the textbook, we know that the limit exists and $v_i \rightarrow v$. 
+    \\[1.1em]
+    We wish to show that the sequence $\Vert v_i\Vert$ is bounded. 
+    \\
+    Using the definition of limit inside of the interior domain of the function, we have: 
+    \begin{align*}\tag{3.54.5}\label{eqn:3.54.5}
+        \forall \;\epsilon \ge 0 \; \exists \;N: x_i &\in \mathbb{B}_{\le \epsilon}(x) \cap \text{int}(\text{dom}(f)) \;\forall i \ge N 
+        \\
+        Q := \mathbb{B}_{\le \epsilon}(x) &\cap \text{int}(\text{dom}(f)) 
+        \\
+        \underset{[3.54.5.1]}{\implies} \sup_{x,y\in Q} 
+        \frac{|f(x) - f(y)|}{\Vert x - y\Vert} &< \infty 
+    \end{align*}
+    WLOG, assume the choice of $\epsilon$ is small enough so that $\mathbb{B}_{\le \epsilon}$ is all inside of the interior of the domain. 
+    \\[0em]
+    [3.54.5.1] This is true by Theorem 3.53 (Convex Function Lipschitz Continuous in a closed subset of its relative interior of its domain;  the interior of its domain is a subset of it's relative interior). 
+    \\ [1.1em]
+    Using Excercise 3.51 we have: 
+    \begin{align*}\tag{3.54.6}\label{eqn:3.54.6}
+        \sup_{\substack{z\in \text{int}(Q)\\ s \in \partial f(z)}} 
+        \Vert s\Vert = \sup_{x,y\in \text{int}(Q)} 
+        \frac{|f(x) - f(y)|}{\Vert x - y\Vert} &< \infty
+    \end{align*}
+    As observed, for all $i > N$, the interior of $Q$ will bound the value of $\Vert s\Vert$, therefore, the sequence $\Vert v_i\Vert$ is also bounded. Now we will be able to use the subgradient inequality, with the knowledge that $v_i\in \partial f(y_i)$  will never blow up as $i\rightarrow \infty$. Consider the subgradient inequality we have: 
+    \begin{align*}\tag{3.54.7}\label{eqn:3.54.7}
+        \left\langle v, y_i - x \right\rangle + f(x) & \le f(y_i) 
+        \\
+        \left\langle v_i, z - y_i \right\rangle + f(y_i) &\le f(z)
+        \\
+        f(y_i) &\le f(z) - \left\langle v_i, z - y_i \right\rangle
+        \\
+        \left\langle v, y_i - x \right\rangle + f(x) \le f(y_i) &\le f(z) - \left\langle  v_i, z - y_i \right\rangle
+        \\
+        f(x) \le  f(y_i) - f(x) - \left\langle v, y_i - x \right\rangle & \le  f(z) - f(x) - \left\langle v_i, z - y_i \right\rangle - \left\langle v, y_i - x \right\rangle
+        \\
+        \text{let: } z &= x
+        \\
+        &= - \left\langle v_i, x \right\rangle
+        + \left\langle v_i, y_i \right\rangle
+        - 
+        \left\langle v, y_i \right\rangle + 
+        \left\langle v, x \right\rangle
+        \\
+        &= \left\langle v - v_i, x \right\rangle + \left\langle v_i - v, y_i \right\rangle 
+        \\
+        &= \left\langle v_i - v, y_i - x \right\rangle
+        \\
+        \implies
+        f(y_i) - f(x) - \left\langle v, y_i - x \right\rangle &\le \left\langle v_i - v, y_i - x \right\rangle
+        \\
+        \frac{f(y_i) - f(x) - \left\langle v, y_i - x \right\rangle}{\left\Vert
+            y_i - x
+        \right\Vert} 
+        &\le \frac{\left\langle v_i - v, y_i - x \right\rangle}{\Vert y_i - x\Vert} \le \Vert v_i - v\Vert
+        \\
+        \implies 
+        \limsup_{i\rightarrow \infty}  \frac{f(y_i) - f(x) - \langle v, y_i - x\rangle}{\Vert y_i - x\Vert} 
+        &\le \lim_{i\rightarrow \infty} \Vert v_i - v\Vert = 0
+        \\
+        \implies \limsup_{i\rightarrow \infty} \frac{f(y_i) - f(x)}{\Vert y_i - x\Vert} - v &= 0
+    \end{align*}
+    The quantity at the RHS of the last line is the Gradient, and that gradient matches with the singleton element in the subgradient set after taking the limit. The original claim of the problem is now proved. 
+
+
+\section{Appendix}
+    \section*{A.1}\label{sec:A.1}
+        We wish to prove that that distance function applied on the set and the closure of the set is the same function.
+        \\
+        Here we use $\bar{Q}$ to denote the closure of the set $Q$. 
+        $$
+            \text{dist}_Q(x) = \text{dist}_{\bar{Q}}(x)
+        $$ 
+        \\
+        The set $\bar{Q}$ is closed. Consider:
+        \begin{align*}\tag{A.1.1}\label{eqn:A.1.1}
+            x^+ : \Vert x^+ - y\Vert_2 &= \text{dist}_{\bar{Q}}(y)
+        \end{align*}
+        The $x^+ \in \bar{Q}$ this is true because the set $\bar{Q}$ is closed and it contains its limit points.
+        \\
+        Now consider some $\epsilon > 0 $ that is small then: 
+        \begin{align*}\tag{A.1.2}\label{eqn:A.1.2}
+            \exists \bar{x} \in Q: \Vert x^+ - \bar{x}\Vert 
+            &\le \epsilon
+        \end{align*}
+        A point in the set $Q$ can be chose arbitrarily close to the point $x^+$. Then consider: 
+        \begin{align*}\tag{A.1.3}\label{eqn:A.1.3}
+            \Vert x^+ - y \Vert &= 
+            \Vert x^+ - \bar{x} + \bar{x} - y\Vert
+            \\
+            & \le \Vert x^+ - \bar{x}\Vert + \Vert \bar{x} - y\Vert
+            \\
+            &= \epsilon + \Vert \bar{x}- y \Vert
+            \\
+            \implies 
+            \text{dist}_{\bar{Q}}(y) - \Vert \bar{x} - y\Vert & \le \epsilon
+        \end{align*}
+        There exists a point $\bar{x}\in Q$ such that it's distance to the minimizer of $\text{dist}_{\bar{Q}}$ can be arbitrarily close, therefore $\text{dist}_{\bar{Q}} \equiv \text{dist}_Q$
+
+    \section*{A.2}\label{sec:A.2}
+        We wish to prove that the projection onto a convex set is unique. This mentioned in the textbook but under the context of closed and convex et, here we will prove it for any type of non-empty set. 
+        \\[1.1em]
+        For contradiction assume that $y_1, y_2 \in \bar{Q}$ and $y_1, y_2 \in \text{proj}_{\bar{Q}}(y)$. And we would assume that $y_1 \neq y_2$. 
+        \\
+        From the definition we have: 
+        \begin{align*}\tag{A.2.1}\label{eqn:A.2.1}
+            \Vert y_1 - y\Vert &= \Vert y_2 - y\Vert = \inf_{x \in \bar{Q}} \Vert y - x\Vert
+        \end{align*}
+        Because they are both minimizer of the distance function on $\bar{Q}$. Using the fact that the set $Q$ is convex we have: $y_1/2 + y_2/2 \in \bar{Q}$ as well then: 
+        \begin{align*}\tag{A.2.2}\label{eqn:A.2.2}
+            \left\Vert \frac{y_1}{2} + \frac{y_2}{2}\right\Vert \le \Vert y_1 - y\Vert &= 
+            \Vert y_2 - y\Vert
+            \\
+            \left\Vert \frac{y_1}{2} + \frac{y_2}{2}\right\Vert
+            &= 
+            \Vert y_1 - y\Vert = 
+            \Vert y_2 - y\Vert
+        \end{align*}
+        However, The equality must hold because $y_1, y_2$ by definition are the minimizers of the distance on the set $\bar{Q}$. Therefore we have the contradiction that: 
+        \begin{align*}\tag{A.2.3}\label{eqn:A.2.3}
+            \left\Vert
+                 \frac{y_1}{2} + \frac{y_2}{2} - y
+            \right\Vert &= 
+            \left\Vert
+                y_1 - y
+            \right\Vert = \Vert y_2 - y\Vert
+            \\
+            \implies 
+            \frac{y_1}{2} + \frac{y_2}{2}
+            &= y_1 = y_2
+        \end{align*}
+        Which means thta all 3 points will have to be the same contradicting the original hypothesis, therefore it's unique. 
+
+    
+\end{document}
+ 

@@ -1,0 +1,494 @@
+\documentclass[]{article}
+\usepackage{amsmath}\usepackage{amsfonts}
+\usepackage[margin=1in,footskip=0.25in]{geometry}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\usepackage[final]{graphicx}
+\usepackage{listings}
+\usepackage{courier}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\newcommand{\indep}{\perp \!\!\! \perp}
+% \usepackage{wrapfig}
+\graphicspath{{.}}
+
+\begin{document}
+\begin{center}
+    Hongda Li
+    \\
+    AMATH 516 FALL 2021 HW 2
+\end{center}
+\section*{2.2}
+    \subsection*{2.2.1}
+        We are trying to prove that: $Q$ is convex, then $\mathbb{R}_+(Q)$ is convex too. 
+        \\[1.1em]
+        Consider 2 elements in the form of $ax, by$ taken out from the set $\mathbb{R}_+(Q)$: 
+        \begin{align*}\tag{2.2.1.1}\label{eqn:2.2.1.1}
+            ax\in \mathbb{R}_+(Q), by \in \mathbb{R}_+(Q); x, y \in Q, a,b \ge 0
+            \\
+            rx + (1 - r)y \in Q \quad \forall r \in (0, 1)
+            \\
+            \implies \forall u \ge 0: urx + (1 - r)uy \in \mathbb{R}_+(Q)
+        \end{align*}
+        Now let's consider a susbtitution of expressions: 
+        \begin{align*}\tag{2.2.1.2}\label{eqn:2.2.1.2}
+            ur &= \lambda a \quad \lambda \in (0, 1), a \ge 0
+            \\
+            (1 - r)u &= (1 - \lambda) by \quad b \ge 0 
+            \\
+            \implies
+            u - ur &= (1 - \lambda) by 
+            \\\implies 
+            u - \lambda a &= (1 - \lambda)by
+            \\
+            u &= (1 - \lambda)by + \lambda a \ge 0 
+            \\
+            r &= \frac{\lambda a}{u} = \frac{\lambda a }{(1 - \lambda)by + \lambda a} \in (0, 1)
+        \end{align*}
+        By the choice of $\lambda \in (0, 1), a,b \ge 0$, we perserve the property of $u \ge 0$ and $r \in (0, 1)$. 
+        \\
+        Consider again the expression: 
+        \begin{align*}\tag{2.2.1.3}\label{eqn:2.2.1.3}
+            & \forall u\ge 0,r\in (0, 1)  : urx + (1 - r)uy \in \mathbb{R}_+(Q)
+            \\
+            \underset{ \text{sub with } \hyperref[eqn:2.2.1.2]{2.2.1.2}}{\implies}
+            & \lambda a x + (1 - \lambda)by \in \mathbb{R}_+(Q); \lambda\in (0, 1), a,b \ge 0 
+        \end{align*}
+        Using the fact that $ax, by\in Q$, the last expression is a convex combinations of the 2 points, and it's presented in the set $\mathbb{R}_+$, therefore, the set $\mathbb{R}_+(Q)$ is convex. 
+    \subsection*{2.2.2}
+        We wish to prove that if $Q_1, Q_2$ is convex, then the set $Q_1 + Q_2$ is also a convex set. From the definition of set addition we have: 
+        $$
+            Q_1 + Q_2 = \left\lbrace
+                q_1 + q_2: q_1 \in Q_1, q_2 \in Q_2
+            \right\rbrace
+        $$
+        Then considering choosing $x, y \in (Q_1 + Q_2)$ and using the definition we can characterize $x, y$ as: 
+        \begin{align*}\tag{2.2.2.1}\label{eqn:2.2.2.1}
+            & \exists\; q_1 \in Q_1, q_2 \in Q_2 : x = q_1 + q_2
+            \\
+            & \exists\; q_3 \in Q_1, q_4 \in Q_2 : y = q_3 + q_4
+        \end{align*}
+        Consider the convex combinations of the 2 points $x, y$ we have: 
+        \begin{align*}\tag{2.2.2.2}\label{eqn:2.2.2.2}
+            \lambda x &= \lambda(q_1 + a_2)
+            \\
+            (1 - \lambda) y &= (1 - \lambda)(q_3 + q_4)
+            \\\implies
+            \lambda x + (1 - \lambda)x &= \lambda q_1 + (1 - \lambda)q_3 + 
+            \lambda q_2 + (1 - \lambda)q_4
+        \end{align*}
+        And notice that $\lambda q_1 + (1 - \lambda)q_3$ is $\in Q_1$ by convexity of $Q_1$, by a similar token the element $\lambda q_2 + (1 - \lambda)q_4$ is also in the set $Q_2$ as well, therefore the convex combination of $x, y$ is in the set $(Q_1 + Q_2)$. 
+    \subsection*{2.2.3}
+        We wish to prove that the intersections of convex set is still a convex set. 
+        \\[1.1em] 
+        Set the intersection of convex sets be $\bigcap_{i \in I}Q_i$, where the set $I$ is an indexing set, then we consider choosing $x, y \in \bigcap_{i \in I}Q_i$, which means that $\forall i \in I: x, y \in Q_i$. Then: 
+        \begin{align*}\tag{2.2.3.1}\label{eqn:2.2.3.1}
+            & \lambda x + (1 - \lambda) y \in Q_i \forall i \in I
+            \\
+            & \lambda x + (1 - \lambda) y \in \bigcap_{i \in I}Q_i
+        \end{align*}
+        $\square$
+    \subsection*{2.2.4}
+        We wish to prove that if $Q \subset \mathbf{E}$ is convex, $L \subset \mathbf{Y}$ is convex, $A:\mathbf{E}\mapsto Y$, then $A(Q), A^{-1}(L)$ are convex, where $A^{-1}$ is the pre-image of the linear operator. 
+        \\[1.1em]
+        Choose $x, y$ from the image of $A$: $x, y \in A(Q)$, then $\exists u \in Q: A(u) = x, \exists v \in Q: A(v) = y$, by the definition of an image of the operator $A$. Consider the convex combinations of $x, y$, we have: 
+        \begin{align*}\tag{2.2.4.1}\label{eqn:2.2.4.1}
+            \lambda x + (1 - \lambda) y &= \lambda A(u) + (1 - \lambda) A(v) \quad \forall \lambda \in (0, 1)
+            \\
+            &= A(\lambda u + (1 - \lambda) v)
+        \end{align*}
+        using the fact that $Q$ is a convex set, $\lambda u + (1 - \lambda)v$ is in $Q$, and $\lambda x + (1 - \lambda) y$ is in the range of the operator $A$. 
+        \\[1.1em]
+        Consider choices of $x, y$ from the pre-image of $A$ for $x, y$, let $U := \{u\in L: A^{-1}(u) = x\}$ and $V := \{v\in L: A^{-1}(v) = y\}$. Then consider the convex combinations of $x, y$: 
+        \begin{align*}\tag{2.2.4.2}\label{eqn:2.2.4.2}
+            \lambda x + (1- \lambda)y &= \lambda A^{-1}(U) + (1- \lambda)A^{-1}(V) \quad \forall \lambda \in (0, 1)
+            \\
+            &= A^{-1}(\lambda U + (1- \lambda)V)
+        \end{align*}
+        By the convexity of $L$, the set $\lambda U + (1 - \lambda)V$ is a subset of $Q$, therefore, the pre-image of the convex combinations of $x, y$ is still a preimage of $A$, therefore the set of pre-images of $A$ is convex if $L$ is convex. 
+\section*{2.6}
+    Let $Q \subseteq \mathbf{E}$, $Q$ convex and $k \in \mathbb{N}$, then the convex combinations of $k$ points in the set $Q$ is still in Q. 
+    \\[1.1em]
+    Inductively we assume that the convex combinations of $k - 1$ points from $Q$ is in the set $Q$, and we wish to show that the convex combinations of $k$ point will be in $Q$, let $k \ge 2$. Define: 
+    \begin{align*}\tag{2.6.1}\label{eqn:2.6.1}
+        S_{k -1} &:= \left\lbrace
+            \sum_{i = 1}^{k - 1}\lambda_ix_i: \lambda \in \Delta_{k - 1}, x_i \in Q \;\forall 1 \le i \le k -1
+        \right\rbrace
+        \\
+        S_{k - 1} &\subseteq Q \quad \text{Inductive Hypothesis}
+    \end{align*}
+    Then we consider the convex combinations of $k$ points, which is any instance of the set $S_k$
+    \begin{align*}\tag{2.6.2}\label{eqn:2.6.2}
+        \sum_{i =1}^{k} \lambda_ix_i &= \left(
+            \sum_{i = 1}^{k - 1} \lambda_i x_i
+        \right) + \lambda_k x_k
+        \\
+        &= (1 - \lambda_k)\left(
+            \sum_{i = 1}^{k - 1} \frac{\lambda_i x_i}{1 - \lambda_k}
+        \right) + \lambda_k x_k 
+        \\
+        \lambda \in \Delta_k &\implies
+        \sum_{i = 1}^{k - 1} \frac{\lambda_i}{1 - \lambda_k} = 1
+        \\
+        \lambda \in \Delta_k &\implies 0 \le \lambda_k \le 1 
+    \end{align*}
+    We had expressed the convex combinations of $k$ points into the convex combinations of 2 points, where one of them is from the set $S_{k - 1}$. Using the fact that $S_k$ is a subset of $Q$, both points are in $Q$, using the definition convex set, the convex combinations of these 2 points are in the set $Q$ as well. Therefore, for any instance of $S_k$, $S_k\subseteq Q$. 
+    \\[1.1em]
+    The base case is $S_2$, if $Q$ is convex, then $S_2 \subseteq Q$  by the definition of a convex set. Therefore, by the principle of mathematics induction, $\forall k \in \mathbb{N}: S_k \subseteq Q$. 
+\section*{2.8}
+    We wish to pveo that: 
+    $$
+        \text{conv}(Q) = T; \quad T := \left\lbrace
+            \sum_{ i = 1}^{k} \lambda_i x_i: k \in \mathbb{N}, \{x_i\}_{1}^k \subseteq Q, \lambda \in \Delta_k
+        \right\rbrace
+    $$
+    The convex hull of any set $Q$ is the convex combinations of all the points in the set $Q$. The convex cone is: 
+
+    $$
+        \text{conv}(Q) = \bigcap \left\lbrace
+            C: C \text{ is convex and } Q \subset C
+        \right\rbrace
+    $$
+    It's the intersections of all convex sets that contains $Q$. 
+    \\[1.1em]
+    $Q\in \text{conv}(Q)$ by definition of $\text{conv}(Q)$: 
+    \begin{align*}\tag{2.8.1}\label{eqn:2.8.1}
+        \forall C, C \text{ convex }: Q &\subseteq C, T\subseteq Q \subseteq  C \quad \text{ by 2.8}
+        \\
+        \implies T&\subseteq \text{conv}(Q)
+    \end{align*}
+    If $T$ is convex, then conv($Q$) is a subset of $T$, beacuse $T$ is one of those convex $C$  that contains $Q$. $T$ contains $Q$ because any points in $Q$ can be added into the convex combinations of $Q$ by incrementing the value $k$. We now wish to show that $T$  is convex so that conv($Q$)$\subseteq T$. 
+    \\
+    \begin{align*}\tag{2.8.2}\label{eqn:2.8.2}
+        u, v &\in T \\
+        \implies &
+        u \in \sum_{i = 1}^{k_1}\beta_i x_i,\; v \in \sum_{ i =1 }^{k_2} \alpha_i y_i
+        \\\implies 
+        \lambda u + (1 - \lambda) v &= 
+        \lambda\sum_{i = 1}^{k_1}\beta_i x_i + (1 - \lambda) \sum_{i = 1}^{k_2}\alpha_i y_i \quad \forall \lambda \in (0, 1)
+    \end{align*}
+    Notice that: 
+    \begin{align*}\tag{2.8.3}\label{eqn:2.8.3}
+        &\lambda \sum_{i = 1}^{k_1} \beta_i + (1 - \lambda)\sum_{i = 1}^{k_2}\alpha_i = \lambda(1) + ( 1- \lambda)(1) = 1
+        \\
+        \implies & \forall \lambda \in (0, 1): \begin{bmatrix}
+            \lambda\beta \\ (1 - \lambda)\alpha
+        \end{bmatrix} \in \Delta_{k1 + k2}
+        \\
+        \implies &\lambda u + (1 - \lambda) v \in T
+        \\\implies
+        & T \text{ is convex}
+    \end{align*}
+    Therefore $\text{conv}(Q) \subseteq T$, therefore $T = \text{conv}(Q)$. 
+\section*{2.16}
+    We wish to prove that the $\text{dist}_Q$ is a 1-Liptshitz continuous funciton: 
+    $$
+        |\text{dist}_Q(x) - \text{dist}_Q(y)| \le \Vert x - y\Vert_2
+    $$
+    Choose any $x, y \in \mathbf{E}$, $z \in Q$. Then we have: 
+    \begin{align*}\tag{2.16.1}\label{eqn:2.16.1}
+        \text{dist}_Q(x) &\le \Vert x - z\Vert_2 \le \Vert x - y\Vert_2 + \Vert y - z\Vert_2
+        \\
+        \text{dist}_Q(x) &\le \Vert x - y\Vert_2 + \Vert y - z\Vert_2
+    \end{align*}
+    This is triangular inequality. Consider for $y$: 
+    \begin{align*}\tag{2.16.2}\label{eqn:2.16.2}
+        \text{dist}_Q(y) &\le \Vert  y - z\Vert_2 \le \Vert y - x\Vert_ 2 + \Vert  x- z\Vert_2
+        \\
+        \text{dist}_Q(y) & \le \Vert y - x\Vert_ 2 + \Vert  x- z\Vert_2
+    \end{align*}
+    Take the difference between the 2 expression, their absolute value is bounded: 
+    \begin{align*}\tag{2.16.3}\label{eqn:2.16.3}
+        |\text{dist}_Q(x) - \text{dist}_Q(y)| &\le \Vert y - z\Vert_2 - \Vert x - z\Vert_2
+        \\
+        |\text{dist}_Q(x) - \text{dist}_Q(y)| &\le \Vert x - y\Vert_2
+    \end{align*}
+    because $\Vert y - z\Vert \le \Vert x - z\Vert + \Vert x - y\Vert$. And the last inequality is imposed using triangular inequality. 
+\section*{2.18}
+    We wish to prove that the projection function $\text{proj}_Q(x)$ is a 1-Lipschitz function when the set $Q$ is closed and convex. 
+    \\[1.1em]
+    We wish to prove this claim: 
+    $$
+        \Vert \underset{Q}{\text{proj}}(x_1) - \underset{Q}{\text{proj}}(x_2)\Vert_2^2
+        \le \left\langle 
+            \underset{Q}{\text{proj}}(x_1) - \underset{Q}{\text{proj}}(x_2), x_1 - x_2
+        \right\rangle
+    $$
+    If this is true, then we can use the Cuachy Schwartz inequality, which gives us the 1-Lipschitz continuity: 
+    \begin{align*}\tag{2.18.1}\label{eqn:2.18.1}
+        \left\langle 
+            \underset{Q}{\text{proj}}(x_1) - \underset{Q}{\text{proj}}(x_2), x_1 - x_2
+        \right\rangle
+        &\le 
+        \Vert \underset{Q}{\text{proj}}(x_1) - \underset{Q}{\text{proj}}(x_2)\Vert \Vert x_1 - x_2\Vert
+        \\
+        \implies 
+        \Vert \underset{Q}{\text{proj}}(x_1)) - \underset{Q}{\text{proj}}(x_2)\Vert_2 &\le \Vert x_1 - x_2\Vert_2
+    \end{align*}
+    Let's proe the claim using the obstuse angle theorem for the porjections of any convex set $Q$, we have: 
+    \begin{align*}\tag{2.18.2}\label{eqn:2.18.2}
+        \forall x_1, x_2 \in Q:&   \\
+        \left\langle 
+            \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1), 
+            x_1 - \underset{Q}{\text{proj}}(x_1) 
+        \right\rangle &\le 0 
+        \\
+        \left\langle 
+        \underset{Q}{\text{proj}}(x_1) - \underset{Q}{\text{proj}}(x_2), 
+        x_2 - \underset{Q}{\text{proj}}(x_1) 
+        \right\rangle &\le 0
+    \end{align*}
+    Let me add a negative sign so we can combine them: 
+    \begin{align*}\tag{2.18.3}\label{eqn:2.18.3}
+        \forall x_1, x_2 \in Q:&   \\
+        \left\langle 
+            \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1), 
+            x_1 - \underset{Q}{\text{proj}}(x_1) 
+        \right\rangle &\le 0 
+        \\
+        \left\langle 
+        \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1), 
+        \underset{Q}{\text{proj}}(x_1)  - x_2
+        \right\rangle &\le 0
+        \\
+        \underset{\text{add them}}{\implies} \left\langle 
+            \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1), 
+            x_1 - x_2 + \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1)
+        \right\rangle &\le 0
+        \\
+        \Vert \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1)\Vert_2^2 - \left\langle \underset{Q}{\text{proj}}(x_2) - \underset{Q}{\text{proj}}(x_1), x_2 - x_1 \right\rangle &\le 0
+    \end{align*}
+    The claim is proven, if follows from \hyperref[eqn:2.18.1]{2.18.1} that the projection function is 1-Lipschitz continuous.
+    
+\section*{2.23}
+    Let $K\subseteq \mathbf{E}$ then $K$ is a convex cone iff the point $\lambda x + u y$ lies in $K$ for any 2 points $x, y \in K$, $u, \lambda \ge 0$. 
+    \\[1.1em]
+    We wish to prove it in 2 directions. Consier the cone $C$.  First, we wish to show that if the set is a convex cone, then $\lambda x + u y \in C$ forall $\lambda, u \ge 0$. 
+    \\
+    If the set $C$ is a cone, then: 
+    \begin{align*}\tag{2.23.1}\label{eqn:2.23.1}
+        \lambda x \in C & \quad \forall x \in C, \lambda \ge 0
+        \\
+        u y \in C &\quad \forall  y \in C, uy \ge 0
+    \end{align*}
+    Using the fact that $C$ is also convex, then: 
+    \begin{align*}\tag{2.23.2}\label{eqn:2.23.2}
+        r\lambda x + (1 - r) u y\in C & \quad \forall r \in (0, 1)
+        \\
+        t:= r \lambda \ge 0 \quad  k := (1 - r)u \ge 0  &
+        \\
+        \forall t, k \ge 0: tx + ky \in C
+    \end{align*}
+    Done. 
+    \\[1.1em]
+    Now we wish to prove that if $\lambda x + u y \in C$ for all points $x, y \in C$ and $\lambda, u \ge 0$, then the set $C$ is a convex cone. 
+    \\
+    Suppoe that $x, y \in C; \lambda, u \ge 0$, $\lambda x + u y \in C$, choose $\lambda = 0, u \ge 0$, then $u y \in C\; \forall u \ge 0$. And this indicates that the set $C$ is a cone. 
+    \\
+    Choose $\lambda \in (0, 1), u = (1 - \lambda)$, then both $\lambda, u \ge 0$ still, but $\lambda x + (1 - \lambda) y \in C$ which implies that the set $C$ is convex. 
+\section*{2.27}
+    Double Polar Theorem. Given a set $K$ that is non-empty and a cone, then: 
+    $$
+    (K^{\circ})^{\circ} = (\text{cl}\circ \text{conv})(K)
+    $$
+    The convex closure of the cone is the same as the polar polar cone. 
+    \\
+    The set of halfplanes supporting the cone $K$ is: 
+    \begin{align*}\tag{2.27.1}\label{eqn:2.27.1}
+        \mathcal{F}_K = \left\lbrace
+            a \in \mathbf{E}: \left\langle x, a \right\rangle\le 0 \; \forall x \in K
+        \right\rbrace \subset K^{\circ}
+    \end{align*}
+    We can construct the closure of the convex hull by intersecting all the supporing halfplanes for the set $K$: 
+    \begin{align*}\tag{2.27.2}\label{eqn:2.27.2}
+        \text{cl}\circ \text{conv}(K) &= 
+        \bigcap_{a \in \mathcal{F}_k} 
+        \left\lbrace
+            x \in \mathbf{E}: \left\langle a, x \right\rangle \le 0
+        \right\rbrace
+        \\
+        &= 
+        \bigcap_{a \in K^{\circ}} 
+        \left\lbrace
+            x \in \mathbf{E}: \left\langle a, x \right\rangle \le 0
+        \right\rbrace
+        \\
+        &= \left\lbrace
+           x \in \mathbf{E} : \left\langle a, x \right\rangle \le 0 , a \in K^{\circ}
+        \right\rbrace
+        \\
+        &= (K^{\circ})^{\circ}
+    \end{align*}
+
+
+\section*{2.33}\label{2.33}
+    In this section we wish to prove that, $\forall Q \in \mathbf{E}$, where $Q$ is a convex set; and a point $\bar{x} \in Q$: 
+    $$
+        T_Q(\bar{x}) = \text{cl} \mathbb{R}_+( Q - \bar{x})
+    $$
+    The tagent cone generated at the point $\bar{x}$ is the closure of the cone generated by offsetting the set $Q$ by $\bar{x}$. 
+    \\
+    Firstly if $\bar{x}\in \text{int}(Q)$, then the tangent cone is $\mathbf{E}$, and $Q - \bar{x}$ interset with an $\epsilon$ around the origin, making $\text{cl}\mathbb{R}_+(Q - \bar{x}) = \mathbf{E}$ as well. 
+    \\
+    Now choose a point $\bar{x}\in \text{cl}(Q)\setminus \text{int}(Q)$, from the boundary of the set $Q$, then we want to show that $T_Q(\bar{x}) \supseteq \text{cl}\mathbb{R}_+(Q - \bar{x})$. 
+    \\
+    \begin{align*}\tag{2.33.1}\label{eqn:2.33.1}
+        &\bar{x} \in Q & \text{By def}
+        \\
+        &\forall x\in Q & \text{Our choice}
+        \\
+        & \frac{1}{n}x \left(1 - \frac{1}{n}\right) \bar{x} \in Q & \text{By Q Convex}
+        \\
+        & \forall u_i: \lim_{i\rightarrow \infty} u_i = 0 \wedge u_i \in [0, 1] & 
+        \\
+        & r_n := u_n x + (1 - u_n)\bar{x} & \text{We defined it}
+        \\
+        & \lim_{n\rightarrow \infty} r_n = \bar{x}, r_n \in Q & 
+        \\
+        & \tau_n = \frac{u_n}{\lambda}, \lambda \ge 0  \implies \tau_n \searrow 0 & \text{Our choice}
+        \\
+        & \lim_{n \rightarrow \infty} \tau_n^{-1}(r_n -\bar{x}) \in T_Q(\bar{x}) & \text{Def of } T_Q(\bar{x})
+        \\
+        & \lim_{n \rightarrow \infty} \tau_n^{-1}(r_n -\bar{x}) & 
+        \\
+        =& \lim_{n\rightarrow \infty} \frac{\lambda}{u_n} (u_n x + (1 - u_n)\bar{x} - \bar{x})&
+        \\
+        =& \lim_{n\rightarrow \infty} (\lambda x - \lambda \bar{x}) = \lambda(x - \bar{x})\in \mathbb{R}_+(Q - \bar{x}) & \text{by Def}
+    \end{align*}
+    Note that, the convexity of $Q$ is important here. $x_n$ is a sequence of points connecting the between $x, \bar{x}$, which are both in the set $Q$ by defintion. Therefore any points that linearly interpolating between then will still be in the set $Q$ by the convexity of the set $Q$.
+    \\[1.1em]
+    Next we wish to prove that $\text{cl}\mathbb{R}_+(Q - \bar{x})\supseteq T_Q(\bar{x})$. Fix any $\bar{x}\in \text{cl}(Q)\setminus \text{int}(Q)$
+    \\
+    Start with the tangent cone at the point $\bar{x}$: 
+    \begin{align*}\tag{2.33.2}\label{eqn:2.33.2}
+        v \in T_Q(\bar{x}) \iff& v = \lim_{i \rightarrow \infty} \tau_i (x_i - \bar{x}), \tau_1 \searrow 0 , x_i \in Q \; \forall i 
+        \\
+        & \lambda_i  := \tau_i^{-1} \ge 0 \implies  \tau_i^{-1}(x - \bar{x}) = \lambda_i (x_i - \bar{x})
+        \\
+        x_i \in Q \implies&  x_i - \bar{x} \in Q - \bar{x} \quad \forall i
+        \\
+        \implies& \lambda_i (x_i -\bar{x}) \in \text{cl}\mathbb{R}_+(Q - \bar{x}) \quad \forall i
+        \\
+        \implies&  v \in \text{cl} \mathbb{R}_+(Q - \bar{x})
+    \end{align*}
+\section*{2.36} \label{2.36}
+    We wish to prove that, for $Q \subseteq \mathbf{E}$ with $Q$ being convex and a point $\bar{x} \in Q$ then the equality: 
+    $$
+        N_Q(\bar{x}) = \left\lbrace
+            v \in \mathbf{E}: \left\langle v, x - \bar{x} \right\rangle \le 0 
+            \; \forall x \in Q
+        \right\rbrace
+    $$
+    Let's start by choosing $v \in \text{RHS}$ then: 
+    \begin{align*}\tag{2.36.1}\label{eqn:2.36.1}
+        \left\langle v, x - \bar{x} \right\rangle \le 0 \; \forall x \in Q
+        \\
+        \text{let: }x_n \rightarrow \bar{x}, x_n \in Q\;\forall n
+        \\
+        \left\langle v, x_n - \bar{x} \right\rangle \le 0 \;\forall x_n \in Q
+        \\
+        \left\langle v, x_n - \bar{x} \right\rangle \le 0\le o(\Vert x - \bar{x}\Vert_2) \;\forall x_n \in Q 
+        \\\implies
+        v \in N_Q(\bar{x})
+    \end{align*}
+    Now consider choosing $v \in N_Q(\bar{x})$, consider: 
+    \begin{align*}\tag{2.36.2}\label{eqn:2.36.2}
+        & N_Q(\bar{x}) = (T_Q(\bar{x}))^\circ & \text{By Lemma 2.35}
+        \\
+        & N_Q(\bar{x}) = \left\lbrace
+            v \in \mathbf{E}: \left\langle v, x \right\rangle\le 0 \;\forall x \in T_Q(\bar{x})
+        \right\rbrace & \text{Def of Polar Cone}
+        \\
+        &x \in T_Q(\bar{x}) = \text{cl}\mathbb{R}_+(Q - \bar{x})& \text{Q convex, use \hyperref[2.33]{2.33}}
+        \\
+        &x = \lambda(y - \bar{x}), \lambda \ge 0 , y\in Q & \text{Def of } \mathbb{R}_+(Q - \bar{x}) \text{ form match}
+        \\
+        \implies&
+        N_Q(\bar{x}) = \left\lbrace
+        v \in \mathbf{E}: \lambda\left\langle v, y - \bar{x} \right\rangle\le 0 \;\forall y \in Q 
+    \right\rbrace &\text{Arrived at LHS}
+    \end{align*}
+    The proof is done. 
+
+
+
+\section*{2.37}
+    We wish to prove that the following statements are all equivalent: 
+    \begin{enumerate}
+        \item[(a)] $v \in N_Q(\bar{x})$
+        \item[(b)] $\bar{x} \in \arg\max_{x \in Q} \left\langle v, x \right\rangle$
+        \item[(c)] $\text{proj}_Q(\bar{x} + \lambda v) = \bar{x} \;\forall \lambda \ge 0$
+        \item[(d)]  $\text{proj}_Q(\bar{x} + \lambda v) = \bar{x}$ for some $\bar{\lambda} \ge 0$
+    \end{enumerate}
+    We wish to prove $(a)\implies (b) \implies (c)\implies (d)\implies (a)$ to show the equivalence of the statement. 
+    \\[1.1em]
+    verify (a)$\implies$(b)
+    \begin{align*}\tag{2.37.1}\label{eqn:2.37.1}
+        & v \in N_Q(\bar{x}) & \\
+        & \forall x \in Q: \left\langle x - \bar{x} , v\right\rangle \le 0 & \text{ by \hyperref[2.36]{2.36}}
+        \\
+        &\forall x \in Q: \left\langle x, v \right\rangle \le \left\langle \bar{x}, v \right\rangle & 
+        \\
+        & \bar{x} \in \arg\max_{x \in Q} \left\langle v, x \right\rangle& 
+    \end{align*}
+    Verify (b)$\implies$(c)
+        We wish to say that: 
+        $$
+            \bar{x} \in \arg\max_{x \in Q} \left\langle v, x \right\rangle
+            \implies 
+            \underset{Q}{\text{proj}}(\bar{x} + \lambda v) = \bar{x} \;\forall \lambda \ge 0
+        $$
+        From the definition that $\bar{x}$ is the maximizer for the dot product on $v$ we have: 
+        \begin{align*}\tag{2.37.2}\label{eqn:2.37.2}
+            \bar{x} \in \arg\max_{x \in Q} \left\langle v, x \right\rangle &\implies 
+            \forall x \in Q: \left\langle x, v \right\rangle \le \left\langle \bar{x}, v\right\rangle
+            \\
+            & \forall x \in Q \left\langle x - \bar{x}, v \right\rangle \le 0
+            \\
+            & \forall x \in Q: \left\langle x - \bar{x}, \lambda v \right\rangle \le 0
+        \end{align*}
+        Take not that the last expression is the Obtuse Angle characterization of projections on to the convex set $Q$, consider $\lambda v = u - \bar{x}$, then we have: 
+        \begin{align*}\tag{2.37.3}\label{eqn:2.37.3}
+            & \forall x \in Q: \left\langle x - \bar{x}, u - \bar{x} \right\rangle \le 0 \;\forall \lambda \ge 0 
+            \\
+            \implies & \underset{Q}{\text{proj}}(u) = \bar{x}
+            \\
+            &= \underset{Q}{\text{proj}}(\bar{x} + \lambda v)\;\forall \ge 0 
+        \end{align*}
+    Verify $(c)\implies (d)$: 
+    \\
+    This is trival, simply by choose some $\lambda$ to be $\bar{\lambda}$ and the statement follows. 
+    \\
+    Verify $(d)\implies (a)$\\
+    We wish to show that 
+    $$
+        \exists \bar{\lambda} > 0 : \underset{Q}{\text{proj}}(\bar{x} + \bar{\lambda}v) = \bar{x} \implies v \in N_Q(\bar{x})
+    $$
+    Consider: 
+    \begin{align*}\tag{2.37.4}\label{eqn:2.37.4}
+        & \forall x \in Q: \left\langle x - \bar{x}, \bar{\lambda}v \right\rangle \le 0 & \text{Proj Obtuse Angle}
+        \\
+        & \forall x \in Q: \left\langle x - \bar{x}, v \right\rangle \le 0 & \bar{\lambda} \ge 0 
+        \\
+        & \forall x \in Q: \left\langle x - \bar{x}, v \right\rangle \le o(\Vert x - \bar{x}\Vert_2) & 
+        \\
+        & x_n \rightarrow \bar{x}, x_n \in Q \;\forall n & 
+        \\
+        & \lim_{n\rightarrow \infty} \left\langle x_n - \bar{x}, v \right\rangle \le o(\Vert x_n - \bar{x}\Vert_2)& 
+        \\
+        \implies &v \in N_Q(\bar{x})& 
+    \end{align*}
+    
+    
+
+
+
+
+
+
+\end{document}

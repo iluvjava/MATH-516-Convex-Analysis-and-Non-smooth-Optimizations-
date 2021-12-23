@@ -1,0 +1,643 @@
+\documentclass[]{article}
+\usepackage{amsmath}\usepackage{amsfonts}
+\usepackage[margin=1in,footskip=0.25in]{geometry}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\usepackage[final]{graphicx}
+\usepackage{listings}
+\usepackage{courier}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+% \usepackage{wrapfig}
+\graphicspath{{.}}
+
+\begin{document}
+\begin{center}
+    Name: Hongda Li 
+    \\
+    AMATH 516 FALL 2021 HW1    
+\end{center}
+
+\section*{Exercise 1.1}\label{1.1}
+    Given a collection of real $m\times n$ matrices, $A_1, A_2, \dots, A_l$, define the linear mapping $\mathcal{A}: \mathbb{R}^{m\times n} \mapsto \mathbb{R}^l$ by setting: 
+    $$
+        \mathcal{A} :=\begin{bmatrix}
+            \left\langle A_1, X \right\rangle
+            \\
+            \left\langle A_2, X \right\rangle
+            \\
+            \vdots
+            \\
+            \left\langle A_l, X \right\rangle
+        \end{bmatrix}
+    $$
+    And show that the mapping $A^* y = \sum_{i = 1}^{l}y_i A_i$ is the adjoint mapping. 
+    \\
+    The operator and its adjoint should satisfy that $\langle AX, y \rangle = \left\langle X, A^*y \right\rangle$. In which we can start considering the left hand side: 
+    \begin{align*}\tag{1.1.1}\label{eqn:1.1.1}
+        \left\langle \mathcal{A}X, y \right\rangle &= 
+        \begin{bmatrix}
+            \left\langle A_1, X \right\rangle
+            \\
+            \left\langle A_2, X \right\rangle
+            \\
+            \vdots
+            \\
+            \left\langle A_l, X \right\rangle
+        \end{bmatrix}
+        \\
+        &= \sum_{i = 1}^{l}y_i \left\langle A_i, X \right\rangle
+        \\
+        &= \sum_{i = 1}^{l} y_i \text{Tr}(A_i^T X)
+    \end{align*}
+    And starting from the right hand side of the equation we have: 
+
+    \begin{align*}\tag{1.1.2}\label{eqn:1.1.2}
+        & \left\langle X, \mathcal{A}^*y \right\rangle 
+        \\
+        &= \left\langle X, \mathcal{A}^* y \right\rangle
+        \\
+        &= 
+        \sum_{i = 1}^{l}\langle X, y_i A_i\rangle 
+        \\
+        &= 
+        \sum_{i = 1}^{l} y_i \left\langle X, A_i \right\rangle
+        \\
+    \end{align*}
+    The last line of \hyperref[eqn:1.1.2]{1.1.2} and \hyperref[eqn:1.1.1]{1.1.1} is the same. Therefore the defined operator $\mathcal{A}^*$ is the adjoint operator. 
+
+\section*{Exercise 1.2}\label{1.2}
+    The inner product induced by a matrix $A$ where A is SPD is an inner product and look for dual norm induces by this inner product. 
+    \\[1.1em]
+    From the property of Positive Definite Matrices we know that: $A\in \mathbf{S}_{++}^n$ where $\forall x \in \mathbf{E} - \{\mathbf{0}\}: \left\langle Ax, x \right\rangle > 0$. We wish to prove that $\left\langle v, w \right\rangle_A := \left\langle Av, w \right\rangle$ is an inner product. To do that we need to test on three properties of an inner product on $\mathbf{E}$ which would be: 
+    \begin{enumerate}
+        \item[1.] The inner product is symmetric: 
+            $$
+                \left\langle v, w \right\rangle_A = \left\langle Av, w \right\rangle = \left\langle v, A^Tw \right\rangle = \left\langle v, Aw \right\rangle = \left\langle v, w \right\rangle_A
+            $$
+            And it's symmetric. 
+        \item[2. ] It's a binlinear operator: 
+            \begin{align*}\tag{1.2.1}\label{eqn:1.2.1}
+                & \left\langle v, u + w \right\rangle_A 
+                \\
+                =& 
+                \left\langle Av, u + w \right\rangle
+                \\
+                =&
+                \left\langle Av, u \right\rangle + \left\langle Av, w \right\rangle
+                \\
+                =& \left\langle v, u \right\rangle_A + \left\langle v, w \right\rangle_A
+            \end{align*}
+            By the fact that it's symmetric, we can prove that it's also linear for its first argument. 
+        \item[3.] It's positive definite: 
+            \begin{align*}\tag{1.2.2}\label{eqn:1.2.2}
+                & \left\langle x, x \right\rangle_A \forall x \neq \mathbf{0}
+                \\
+                & \left\langle x, x \right\rangle_A = \left\langle Ax, x \right\rangle
+                \\
+                &= x^TAx > 0 \quad \forall \;x \neq \mathbf{0}
+            \end{align*}
+            The last line is by the defintion of positive definite matrix applied on $A$. 
+    \end{enumerate}
+    In our case, the definition of the dual norm is: 
+    \begin{align*}\tag{1.2.3}\label{eqn:1.2.3}
+        \left\Vert
+             x
+        \right\Vert_A^* = 
+        \sup_{z}\left\lbrace
+            \left\langle x, z \right\rangle: \Vert z\Vert_A \le 1
+        \right\rbrace
+    \end{align*}
+    Here we invoke the property that $A$ is Positive definite and hence there exists the factorization that $A = LL$ where $L = A^{1/2}$. And $L^T = L$. 
+    \begin{align*}\tag{1.2.4}\label{eqn:1.2.4}
+        & \Vert z\Vert_A \le 1 \implies \left\langle Az, z \right\rangle\le 1
+        \\
+        \implies 
+        &
+        \left\langle LLz, z \right\rangle\le 1
+        \\
+        \implies &
+        \left\langle Lz, L^Tz \right\rangle \le 1
+        \\
+        \implies &
+        \left\langle Lz, Lz \right\rangle \le 1
+    \end{align*}
+    Let $y = LZ$, then $Z = L^{-1}Y$, $\Vert z \Vert_A = \Vert y\Vert_2$, and this is possible because $L$ is PSD. And hence the dual norm can be written in the form of: 
+    $$
+        \Vert x\Vert_A^* = \sup_{\Vert y\Vert_2 \le 1} \left\langle x, L^{-1}y  \right\rangle = \sup_{\Vert y\Vert_2 \le 1} \left\langle L^{-T}x, y \right\rangle
+    $$
+    To maximaize the quantity, we choose unit vector $Y$ that points towards the direction of $L^{-T}x$, this is possible for all $x$ because the matrix $L$ is PSD and hence, invertible and it's full-ranked. Then we can say that: 
+    \begin{align*}\tag{1.2.5}\label{eqn:1.2.5}
+        y &= \frac{L^{-T}}{\Vert L^{-T}x\Vert_2} 
+        \\
+        \implies  \Vert x\Vert_A^* 
+        &= \frac{
+            \left\langle L^{-T}x, L^{-T}x \right\rangle
+        }{
+            \Vert L^{-T}x\Vert_2
+        }
+        \\
+        &= \sqrt{\left\langle L^{-T}x, L^{-T}x \right\rangle}
+        \\
+        &= \sqrt{\left\langle x, L^{-1}L^{-T}x \right\rangle}
+    \end{align*}
+    Here, take notice that $L^{-T} = Q \sqrt{\Lambda^{-1}} Q^T = L^{-1}$, and that would mean $L^{-1}L^{-T}=L^{-1}L^{-1} = A^{-1}$. And we can do that without worrying because SPD matrix gives real positive $\lambda$ on the diagonal of $\Lambda$, and hence $\Vert x\Vert_A^* = \sqrt{\left\langle  x, A^{-1}x\right\rangle} = \Vert x\Vert_{A^{-1}}$
+
+\section*{Exercise 1.6}\label{sec:1.6}
+    Consider a closed function $f:\mathbf{E}\mapsto \bar{\mathbb{R}}$ and a nonempty compact set $Q\subset \mathbf{E}$. Then the infimum value of $\inf_{x\in Q}f(x)$ is attained at some point in $Q$. 
+    \\[1.1em]
+    The function is closed, which means that its lower-semicontinuity asserts: 
+    $$
+        \exists\; x^* \in \mathbf{E}: f(x^*) = \inf_{x\in Q} f(x)
+    $$
+    The set $Q$ is closed and compact using the Bozano-Weistrass theorem, all sequence converge to some point, and that limit point will be in the set. Therefore, $x^*$ is attained inside of the set $Q$. And therefore: 
+    $$
+        \exists\; x^* \in Q: f(x^*) = \inf_{x\in Q} f(x)
+    $$
+\section*{Exercise 1.8}
+    Any coercive closed function $f:\mathbf{E}\mapsto \bar{\mathbb{R}}$ has a minimizer. 
+    \\[1.1em]
+    By the definition that the function is coercive, we know that: 
+    \begin{align*}\tag{1.8.1}\label{eqn:1.8.1}
+        \forall \; r\; \exists\; \delta: \Vert x\Vert > \delta \implies f(x) > r
+    \end{align*}
+    By the fact that the function is closed, we know that the set $Q = \{x: f(x)\le r\}$ for a fixed $r$ is a closed set, and it's compact too because $\Vert x\Vert > \delta \implies f(x) > r$, which is then not in the set, so it's inside of the $\Vert x\Vert \le \delta$. 
+    \\
+    Using this new closed and compact set $Q$ and ues what we proved in \hyperref[sec:1.6]{1.6}, we know that the function attains a minimum and the solution is in the domain $Q$. 
+\section*{Exercise 1.9}
+    The function is: 
+        $$
+            f(x) = \frac{1}{2}\left\langle x, \mathcal{A}x \right\rangle + 
+            \left\langle \mathcal{A}, x \right\rangle + c
+        $$
+    \subsection*{1.9.1}
+        Replacing $\mathcal{A}$ by a Adjoint operator $\frac{1}{2}(\mathcal{A} + \mathcal{A}^*)$, then it won't change the value of the function. This is true because: 
+        \begin{align*}\tag{1.9.1.1}\label{eqn:1.9.1.1}
+            \frac{1}{2}\left\langle x, \mathcal{A}x \right\rangle &= 
+            \frac{1}{2} \left\langle x, \frac{1}{2}(\mathcal{A} + \mathcal{A}^*) \right\rangle
+            \\
+            &= \frac{1}{4} \left\langle x, \mathcal{A}x + \mathcal{A}^*x \right\rangle
+            \\
+            &= \frac{1}{4}\left\langle x, \mathcal{A}x \right\rangle + \frac{1}{4} + \left\langle x, \mathcal{A}^*x \right\rangle
+            \\
+            &= \frac{1}{4}\left\langle x, \mathcal{A}x \right\rangle + \frac{1}{4} + \left\langle \mathcal{A}x, x \right\rangle
+            \\
+            &= \frac{1}{2}\left\langle x, \mathcal{A}x \right\rangle
+        \end{align*}
+        And this would imply that: 
+        \begin{align*}\tag{1.9.1.2}\label{eqn:1.9.1.2}
+            f(x) = \frac{1}{2}\left\langle x, \mathcal{A}x \right\rangle + \left\langle v, x \right\rangle + c 
+            &= \frac{1}{2}\left\langle x, \mathcal{A}x \right\rangle + \left\langle v, x \right\rangle + c
+        \end{align*}
+    \subsection*{1.9.2}
+        We assume that the $\mathcal{A} = \mathcal{A}^*$, then we want to figure out the gradient of the function. 
+        \\[1.1em]
+        In general, the rule for $\left\langle f, g \right\rangle$ where $f, g$ maps from $\mathbb{R}^m$ to $\mathbb{R}^n$, then: 
+        $$
+            \nabla \left\langle f, g \right\rangle = \nabla f^T g + \nabla g^T f
+        $$
+        For the convenience of notation and type setting, $\mathcal{A}$ is $A$ and $\mathcal{A}^*$ is $A^T$
+        Where, $\nabla f, \nabla g$ are the Jacobian of the function $f, g$. Therefore, the Gradient is going to be like: 
+        \begin{align*}\tag{1.9.2.1}\label{eqn:1.9.2.1}
+            \nabla f(x) &= \nabla \left[
+                \frac{1}{2}x^TAx + v^Tx + c
+            \right]
+            \\
+            &= \frac{1}{2}\nabla \left[x^TAx\right] + v
+            \\
+            &= \frac{1}{2}\nabla[x]^TAx + \frac{1}{2}\nabla[Ax]^Tx + v
+            \\
+            &= 
+            \frac{1}{2}(A + A^T)x + v
+            \\
+            &= 
+            \frac{1}{2}(2A)x + v 
+            \\
+            &= 
+            Ax + v
+        \end{align*}
+        The the gradient on the function $Ax + v$ is just $A$. The Gradient of a linear operator is just the operator itself, because it's a linear operator. 
+
+    \subsection*{1.9.3}
+        If $\mathcal{A}$ is PD(positive Definite) if and only if $f$ is Coercive. \\[1.1em]
+        To prove this, we need to prove it both directions. 
+        \\[1.1em]
+        First assuming that the matirx $A$ is PD, then we wish to show that the function $f(x)$ is coercive. Start by considering the $\left\langle x, Ax \right\rangle$ part of the function which we have: 
+        \begin{align*}\tag{1.9.3.1}\label{eqn:1.9.3.1}
+            &=
+            \frac{1}{2}\left\langle x, Q\Lambda Q^Tx \right\rangle
+            \\
+            & = \frac{1}{2}\left\langle Q^Tx, \Lambda Q^Tx \right\rangle
+            \\
+            \text{Let: }& y = Q^Tx, x = Qy \text{ Then:}
+            \\
+            &= \frac{1}{2}\left\langle y, \Lambda y \right\rangle
+            \\
+            &= 
+            \frac{1}{2}\sum_{i = 1}^{n} \lambda_i y^2
+        \end{align*}
+        Using the fact that the matrix $A$ is Positive Definite, we know that all of the eigenvalues of the matrix $A$ is positive, and hence, the function $f(x)$ is a quadratic function in $y$, and all of the coefficient of the quadratic terms are positive. The remaining component $v^Tx = v^TQ_y$, which is a linear function wrt to variable $y$. It's obvious that a function that is a quadratic with positive coefficients on the quardratic term is coercive (Do a completing square thing). 
+        \\[1.1em]
+        Nest we wish to show that if $f(x)$ is Coercive, then $A$ is PD, which by contradictions, we want to show contradiction on the statement that if $f(x0)$ is coercive, then $A$ is PD. Assuming  that $f(x)$ is coercive but the matrix $A$ is not PD. Not PD implies that: 
+        $$
+            \exists y: \frac{1}{2}\left\langle y, Ay \right\rangle \le 0
+        $$
+        Along the directioin of $y$ consider $y = \alpha\hat{y}$ then: 
+        \begin{align*}\tag{1.9.3.2}\label{eqn:1.9.3.2}
+            f(x) &= \frac{\alpha^2}{2}\left\langle \hat{y}, A\hat{y} \right\rangle + v^T \hat{y}
+            \\
+            &= \frac{\alpha^2}{2}\left\langle \hat{y}, A\hat{y} \right\rangle + \alpha v^T \hat{y} + c
+        \end{align*}
+        Then, by the fact that the matrix $A$ is not positive definite, we have a quadratic function that has negative quadratic term, hence the function decreases to infinity, making it not coercive at all. 
+
+\section*{Exercise 1.12}        
+    Define 2 sets: 
+    \begin{align*}\tag{1.12.1.0.1}\label{eqn:1.12.0.1}
+        & \mathbb{R}_{++}^n = \left\lbrace
+            x \in \mathbb{R}^n: x_i > 0 \; \forall \; 1 \le i \le n
+        \right\rbrace
+        \\
+        & \mathbf{S}_{++}^n := \left\lbrace
+            X \in \mathbf{S}_n: X \prec 0
+        \right\rbrace
+    \end{align*}
+    To denote the positive quadrant and all the PD matrices. Then define function $f$ mapping from $\mathbb{R}_{++}^n$ to $\mathbb{R}$ and function $F(X)$ mapping from $\mathbf{S}_{++}^n$ to $\mathbb{R}$ which is: 
+    \begin{align*}\tag{1.12.0.2}\label{eqn:1.12.0.2}
+        & f: \mathbb{R}_{++}^n\mapsto \mathbb{R}  = \sum_{i = 1}^{n} - \log(x_i) 
+        \\
+        & 
+        F:\mathbf{S}_{++}^n \mapsto \mathbb{R} = - \log \det(X)
+    \end{align*}
+    \subsection*{1.12.1}
+        Figure  out the Gradient and Hessian of the function $f(x)$. We use $e_i$ to denote the standard basis vector for $\mathbb{R}^n$
+        \begin{align*}\tag{1.12.2.1}\label{eqn:1.12.2.1}
+            \nabla f(x) &= \nabla \left[
+                \sum_{i = 1}^{n}-\log (x_i)
+            \right]
+            \\
+            &= \sum_{i = 1}^{n}-\nabla \left[
+                \log(x_i)
+            \right]
+            \\
+            &= \sum_{i = 1}^{n} - \left(
+                \frac{1}{x_i}
+            \right)e_i
+        \end{align*}
+        And the Hessian is just the gradient of the gradient giving us: 
+        \begin{align*}\tag{1.12.2.2}\label{eqn:1.12.2.2}
+            \nabla f(x) &= \nabla\left[
+                \sum_{i = 1}^{n} -\left(
+                    \frac{1}{x_i}
+                \right)e_i
+            \right]
+            \\
+            &= 
+            \sum_{i = 1}^{n} \nabla\left[
+                \frac{-1}{x_i} e_i
+            \right]
+            \\
+            &= 
+            \sum_{i = 1}^{n} \frac{1}{x_i^2} e_i e_i^T
+            \\
+            &= \text{diag}\left(\frac{1}{x_1^2}, \frac{1}{x_2^2}, \dots, \frac{1}{x_n^2}\right)
+        \end{align*}
+    \subsection*{1.12.2}
+        We wish to prove that the gradient of the function $F(X)$ is: 
+        $$
+            \nabla F(X) = - X^{-1}
+        $$
+        The key is to justify, firstly that the below equalty is true: 
+        $$
+            F(X + tV) - F(X) + t * \left\langle 
+                X^{-1}, V
+            \right\rangle = 
+            -\log\det(I + t X^{-1/2}V X^{-1/2}) + t * \text{Tr}(X^{-1/2}V X^{-1/2})
+        $$
+        We here we are going to use the sevral identities about the matrix determinant and the trace of the matrices for the derivation: 
+        \begin{align*}\tag{1.12.3.1}\label{eqn:1.12.3.1}
+            & \det(AB) = \det(A)\det(B)
+            \\
+            &\det(A^{-1}) = \det(A)^{-1}
+            \\
+            &
+            \left\langle A, B \right\rangle = \text{Tr}(A^TB)
+            \\
+            & \text{Tr}(AB) = \text{Tr}(BA)
+        \end{align*}
+        The justification for the equality goes like this: 
+        \begin{align*}\tag{1.12.3.2}\label{eqn:1.12.3.2}
+            F(X + tV) - F(x) &= -\log(\det(X + tV)) -\log \det(X)       
+            \\
+            &= \log\left(\frac{\det(X)}{\det(X + tV)}\right)
+            \\
+            &= 
+            - \log\left(
+                \frac{\det(X + tV)}{\det(X)}
+            \right)
+            \\
+            &= 
+            -\log\left(
+                \det(X^{-1/2})\det(X + tV) \det(X^{-1/2})
+            \right)
+            \\
+            &= 
+            -\log \det(I + tX^{-1/2}VX^{-1/2})
+        \end{align*}
+        Here we use the fact that the matrix $X$ is Symmetric Definite, and hence it has the factorization of $X = X^{-1/2}X^{-1/2}$, where $X^{-1/2}$ is also a Positive Definite Matrix. \
+        \\
+        Where, the first 2 terms of the left hand side of the equation is the same as the first term on the right hand side of the equation, next we have: 
+        \begin{align*}\tag{1.12.3.3}\label{eqn:1.12.3.3}
+            t \left\langle X^{-1}, V\right\rangle &= t * \text{Tr}(X^{-T}V)
+            \\
+            &=t* \text{Tr}(X^{-1/2}VX^{-1/2})
+        \end{align*}
+        Therefore, the above equality is true, Next, we wish to prove that the RHS of the equation is $o(|t|)$. 
+        \\
+        We consider the substitution with $A = x X^{-1/2}VX^{-1/2}$ then the RHS of the equation becomes: 
+        \begin{align*}\tag{12.3.3.4}\label{eqn:12.3.3.4}
+            &=-\log\det(I + t X^{-1/2}V X^{-1/2}) + t * \text{Tr}(X^{-1/2}V X^{-1/2})
+            \\
+            &=  
+            -\log\det(I + tA) + t* \text{Tr}(A)
+        \end{align*}
+        For convenience, we use $\lambda_i[M]$ to denote the $i$ Eigenvalues of the matrix, where $\lambda_n = \lambda_{\max}$ and $\lambda_1$ is $\lambda_{\min}$. Then: 
+        \begin{align*}\tag{12.3.3.5}\label{eqn:12.3.3.5}
+            &= -\log\left(
+                \prod_{i = 1}^{n}\lambda_i[I + tA]
+            \right) + t* \text{Tr}(A)
+            \\
+            &
+            \underset{[1]}{=}
+            -\log\left(
+                \prod_{i = 1}^{n}\lambda_i[I + tA]
+            \right) + t \sum_{i = 1}^{n}\lambda_i[A]
+            \\
+            &= - \sum_{i = 1}^{n}\log \left(
+                1 + t\lambda_i[A]
+            \right) + t \sum_{i = 1}^{n} \lambda_i[A]
+        \end{align*}
+        [1]: Here we use the fact the the sume of the eigenvalues are the Trace of the matrix which is easy to deduce using the Canonical Jordan Form decomposition of any Matrices. \footnote[1]{$\text{Tr}(XJX^{-1}) = \text{Tr}(X^{-1}XJ) = \prod_{i= 1}^{n} \lambda_i[J]$  }
+        \\
+        We can take the limit of the last part of the expression \hyperref[eqn:12.3.3.5]{12.3.3.5} using the Lopital's Rule and have: 
+        \begin{align*}\tag{12.3.3.6}\label{eqn:12.3.3.6}
+            \lim_{t \rightarrow 0} 
+            \frac{
+                -\sum_{i = 1}^{n}\log(1 + t \lambda_i[A])
+            }{t} &= 
+            \lim_{t \rightarrow 0} - \sum_{i = 1}^{n}
+                \frac{\lambda_i[A]}{1 + t \lambda_i[A]}
+            \\
+            &= -\sum_{i = 1}^{n}\lambda_i[A]
+            \\
+            \lim_{t\rightarrow 0} \frac{t \sum_{i = 1}^{n} \lambda_i[A]}{t} &= 
+            \sum_{i = 1}^{n} \lambda_i[A] 
+            \\
+            \implies 
+            \lim_{t\rightarrow 0}
+            \frac{\sum_{i = 1}^{n}\log \left(
+                1 + t\lambda_i[A]
+            \right) + t \sum_{i = 1}^{n} \lambda_i[A]}{t}
+            &= 0
+        \end{align*}
+        Therefore, we have shown that the RHS of the equation is zero if we take the Limit, and taking the limit on the Left hand side we will obetain the direction derivative on the direction $V$ for the function $F(X)$, which is: 
+        \begin{align*}\tag{12.3.3.7}\label{eqn:12.3.3.7}
+            \lim_{t\rightarrow 0} 
+            \frac{
+                F(X + tV) - F(X) + t * \left\langle X^{-1}, V\right\rangle
+            }
+            {t} &= 0
+            \\
+            \lim_{t\rightarrow 0} \frac{F(X + tV) - F(X)}{t} = - \left\langle X^{-1}, V \right\rangle
+            \\
+            \nabla F(X)[V] &= - \left\langle X^{-1}, V \right\rangle
+            \\
+            \underset{[1]}{\implies}
+            \nabla F(X) = - X^{-1}
+        \end{align*}
+        [1]: The direction derivative is analogus to derivative derivative where $V$ is just a vector. 
+        \\
+        We have shown that the Gradient of $F(X)$ is $-X^{-1}$. 
+        $\square$
+        \\
+        Next we wish to figure out the directional derivative on the gradient which is: 
+        \begin{align*}\tag{12.3.3.8}\label{eqn:12.3.3.8}
+            \nabla^2F(X)[V] &= \lim_{t\rightarrow 0}
+            \frac{\nabla F(X + tV) - \nabla F(X)}{t}
+            \\
+            &= \lim_{t\rightarrow 0} \frac{-(X  +tV)^{-1} + X^{-1}}{t}
+        \end{align*}
+        Take notice that: 
+        \begin{align*}\tag{12.3.3.9}\label{eqn:12.3.3.9}
+            (X + tV)^{-1} &= X^{-1/2}(I + tX^{-1/2}VX^{-1/2})^{-1} X^{-1/2}
+            \\
+            \text{Let: }A &= X^{-1/2}VX^{-1/2}
+            \\
+            (I + tA)^{-1} &= \sum_{k = 0}^{\infty}(-t)^{k}A^k
+            \\
+            &= I - tA + \mathcal{O}(|t^2| \Vert A\Vert_{op}^2)
+        \end{align*}
+        Take note that this inverse only equals to the series when the Matrix $I - A$ is invertible and the spectral radius of the matrix $I - A$ is strictly less than one. 
+        \\
+        And in that sense, we can make the susbtitution from equation above to the equation above above, giving us: 
+        \begin{align*}\tag{12.3.3.10}\label{eqn:12.3.3.10}
+            & -(X + tV)^{-1} + X^{-1}
+            \\
+            &= -X^{-1/2}(I + tX^{-1/2}VX^{-1/2})^{-1} X^{-1/2} + X^{-1} 
+            \\
+            &= X^{-1/2}(-I - tX^{-1/2}VX^{-1/2})^{-1} X^{-1/2} + X^{-1/2} I X^{-1/2}
+            \\
+            &= X^{-1/2}(-(I + tA)^{-1} + I)X^{-1/2}
+            \\
+            \implies X^{-1/2}\left(
+                \lim_{t\rightarrow 0} \frac{(-I + tA)^{-1} + I}{t}
+            \right)X^{-1/2}
+            &= 
+            X^{-1/2}\left(\lim_{t\rightarrow 0} 
+                \frac{-I + tA + \mathcal{O}(|t|^2\Vert A\Vert_{op}^2) + I}{t}
+            \right)X^{-1/2}
+            \\
+            &= X^{-1/2}AX^{-1/2} = X^{-1/2}(X^{-1/2}VX^{-1/2})X^{-1/2} = X^{-1}AX^{-1}
+        \end{align*}
+        Therefore when the operator norm of $A$ is bouned, then the limit in \hyperref[eqn:12.3.3.8]{12.3.3.8} is approaching zero, proving the the direction derivative along the matrix $V$ is $X^{-1}VX^{-1}$. $\square$
+        \\[1.1em]
+    \subsection*{1.12.3}
+        In this section we are going to show that the Direction Derivative of the Gradient in the direction of matrix $V$ is a Positive Definite Operator. We want to show that: 
+        $$
+            \left\langle 
+                \nabla^2F(X)[V], V
+            \right\rangle
+            = 
+            \Vert X^{-1/2}VX^{-1/2}\Vert_F^2
+        $$
+        \begin{align*}\tag{1.12.3.1}\label{eqn:1.12.3.1}
+            \left\langle X^{-1}VX^{-1}, V \right\rangle
+            &= \left\langle X^{-1/2}X^{-1/2}VX^{-1}, V \right\rangle
+            \\
+            &= 
+            \left\langle X^{-1/2}VX^{-1}, X^{-1/2}V \right\rangle
+            \\
+            &= 
+            \left\langle X^{-1/2}VX^{-1/2}, X^{-1/2}VX^{-1/2} \right\rangle
+            \\
+            &= \Vert X^{-1/2}VX^{-1/2}\Vert_F^2
+        \end{align*}
+        The frobenius norm is induced by the Inner product defined for matrices. Therefore the last line follows directly from the second last line. Using the fact that the right hand side of the equation is always positive, we know that operator is positive definite. 
+\section*{1.13}
+    Define $f:U\mapsto \mathbb{R}$ and 2 points $x, y \in U$. Define the univariate function $\varphi: [0, 1]\mapsto \mathbb{R}:= f(x + t(y - x))$ and let $x_t:= x + t(y - x)$. 
+    \subsection*{1.13.1}
+        If the function $f$ is $C^{1}$ smooth, then show the equality: 
+        $$
+            \varphi'(t) = \left\langle \nabla f(x_t), y - x \right\rangle \text{ holds for any } t \in (0, 1)
+        $$
+        The function $f(x)$ is $C^1$ smooth implies that the function's derivative is Lipschitz Continuous, and the second derivative is discontinuous. Consider: 
+        \begin{align*}\tag{1.12.1.1}\label{eqn:1.12.1.1}
+            \partial_t\varphi(t) &= \partial_t f(x + t(y - x))
+            \\
+            &= \nabla f(x + t(y - x))^T\partial_t(x + t(y - x))
+            \\
+            &=
+            \nabla f(x + t(y - x))^T(y - x)
+            \\
+            &= 
+            \left\langle \nabla f(x_t), y - x \right\rangle
+        \end{align*}
+        Choosing $t \in (0, 1)$ will means that all these points interpolated by $t$ are valid and they are in the domain of the function $f$. 
+    \subsection*{1.13.2}
+        Show that: 
+        $$
+            \varphi''(t) = \left\langle \nabla^2f(x_t)(y - x), (y - x) \right\rangle
+        $$
+        Firstly, taking the directly derivative through a multi-variabel function is: 
+        \begin{align*}\tag{1.13.2.1}\label{eqn:1.13.2.1}
+            \partial_t[\nabla f(x_t)] &= 
+            \partial_t[\nabla f(x + t(y - x))]
+            \\
+            &= \nabla^2f(x_t)\partial_t[x + t(y - x)] 
+            \\
+            &= \nabla^2 f(x_t)(y - x)
+        \end{align*}
+        Taking the scalar derivative through a multivariable function requires the Jacobian and the direction derivative (The Jacobian of the Gradient is the Hessian).
+        \\
+        Straight from \hyperref[eqn:1.12.1.1]{1.12.1.1}, we have: 
+        \begin{align*}\tag{1.13.2.2}\label{eqn:1.13.2.2}
+            \partial_t[\varphi'(t)]&= \left\langle 
+                \partial_t[\nabla f(x + t(y - x))], y - x
+            \right\rangle
+            \\
+            &= 
+            \left\langle 
+                \nabla^2f(x_t)(y - x)) , y - x
+            \right\rangle
+        \end{align*}
+        The differential operator goes into the inner product because $y - x$ is a fixed constant wrt to $t$, and then we just make a substitution using the results from \hyperref[eqn:1.13.2.1]{1.13.2.1}
+\section*{1.16}
+    The function $f:U\mapsto \bar{\mathbb{R}}$ where $U$ is a convex set, if $f$ is $C^2$ smooth, then $f$ is $\beta$-smooth if and only if $\Vert \nabla^2f(x)\Vert_{\text{op}}\le \beta$. 
+    \\[1.1em] 
+    To show that the statement is true, we need to show it in 2 ways. Firstly we wish to assume that the oiperator norm of the Hessian is bounded by a factor $\beta$, which means thta, for all $x$ in $U$, the domain of the function, $\left\Vert
+        \nabla^2f(x)
+    \right\Vert_{\text{op}}$ is bounded by the factor $\beta$. Let's start with a line with 2 points $x, y \in U$, and interpolated by a parameter $t\in(0, 1)$  where $x_t = x + t(y - x)$, then we make use of Taylor series on the gradient: 
+    \\
+    \begin{align*}\tag{1.16.1}\label{eqn:1.16.1}
+        \nabla f(x_t)  - \nabla f(x) &= \int_{0}^{t} \nabla^2 f(x_s)(x_s - x)ds
+        \\
+        \Vert \nabla f(x_t)  - \nabla f(x)\Vert &= 
+        \left\Vert \int_{0}^{t} \nabla^2 f(x_s)(x_s - x)ds\right\Vert
+        \\
+        &\le \int_{0}^{t} 
+            \left\Vert
+                \nabla^2 f(x_s)(x_s - x)
+            \right\Vert
+        ds
+        \\
+        &\le \int_{0}^{t} 
+            \left\Vert
+                 \nabla^2 f(x_s)
+            \right\Vert_{\text{op}}
+            \Vert x_s - x\Vert
+        ds
+        \\
+        &= 
+        \int_{0}^{t} 
+            \left\Vert
+                 \nabla^2 f(x_s)
+            \right\Vert_{\text{op}}
+            \Vert s(y - x)\Vert
+        ds
+        \\
+        & \le
+        t \max_{t \in [0, 1]} \Vert \nabla^2 f(x_t)\Vert_{\text{op}}\Vert y - x\Vert
+        \\
+        \left\Vert
+            \nabla f(y) - \nabla f(x)
+        \right\Vert &\le
+        \max_{t\in [0, 1]}\left\Vert
+             \nabla^2 f(x_t)
+        \right\Vert_{\text{op}} \Vert y - x\Vert
+    \end{align*}
+    And in fact, we know that the operator norm  is going to be bounded by $\beta$, and therefore, we arrive at the fact that the gradient is L-Continuous, which is one of the characterizations of beta smoothness of the function. 
+    $\square$
+    \\[1.1em]
+    The converse of the argument is arguing that if a function's gradient is L-Continuous, then the opperator norm is bounded by the same constant from L-continuity. Let's start with Taylor Expansion for the gradient of the function. We start of by choosing to points $x, y \in U$, where the direction of $y - x$ will be chosen later, and then we set $x_t = x + t(y - x)$, then consider this: 
+    \begin{align*}\tag{1.16.2}\label{eqn:1.16.2}
+        \Vert \nabla f(x_t) - \nabla f(x)\Vert &\le \beta \Vert x_t - x\Vert
+    \end{align*}
+    At this point, I want to bring out the Taylor series: 
+    \begin{align*}\tag{1.16.3}\label{eqn:1.16.3}
+        \nabla f(x_t) &= \nabla f(x) + \int_{0}^{t} 
+            \nabla^2f(x_s)(y - x)
+        ds
+        \\
+        \nabla f(x_t) - \nabla f(x) &= \int_{0}^{t} \nabla^2f(x_s)(y - x)ds
+    \end{align*}
+    Substituting \hyperref[eqn:1.16.3]{1.16.3} into \hyperref[eqn:1.16.2]{1.16.2}, giving us: 
+    \begin{align*}\tag{1.16.4}\label{eqn:1.16.4}
+        \left\Vert
+            \int_{0}^{t} 
+                \nabla^2 f(x_s)(y-x)
+            ds
+        \right\Vert
+        &\le 
+        \beta \Vert x_t - x\Vert
+        \\
+        \left\Vert
+            \frac{
+                \int_{0}^{t} 
+                    \nabla^2 f(x_s)(y-x)
+                ds
+            }{x_t - x}
+        \right\Vert
+        &\le \beta
+        \\
+        \left\Vert
+            \lim_{t\rightarrow 0}
+            \frac{\int_{0}^{t} \nabla^2 f(x_s)(y - x)ds}{x_t - x}
+        \right\Vert
+        &\le 
+        \beta
+        \\
+        \left\Vert
+            \lim_{t \rightarrow 0}
+            \frac{\nabla^2 f(x_t)(y - x)}{y - x}
+        \right\Vert &\le \beta  
+        \quad \text{Lopital's Rule}
+    \end{align*}
+    Now we make the choice $(y-x)$ to be the direction of the maximal Eigenvalues for the Hessian matrix, then the limit on the LHS becomes the operation norm. Therefore, we arrive at the conclusion that: 
+    $$
+    \left\Vert
+        \lim_{t\rightarrow 0} \frac{\nabla^2f(x + tv)v}
+        {
+            tv
+        }
+    \right\Vert \le \beta
+    $$
+    Using the fact that the function $f$ is $C^2$ smooth, then taking the limit will give us the Operator Norm of the matrix $\Vert\nabla^2 f(x)\Vert_{\text{op}} \le \beta$ (the pertubation in the hessian will settle at the end.). Therefore, if the gradient of the function is L-Continuous, we know thta the operator is less than Beta, for every point $x \in U$.
+
+        
+
+\end{document}
